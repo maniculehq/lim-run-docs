@@ -1,6 +1,6 @@
 import { defineDocs } from "@farming-labs/docs";
 import { pixelBorder } from "@farming-labs/theme/pixel-border";
-import { Smartphone, Rocket, Hammer, Terminal, Pin } from "lucide-react";
+import { Smartphone, Rocket, Hammer, Terminal, BookOpen, Zap } from "lucide-react";
 import { SidebarThemeToggle } from "@/components/sidebar-theme-toggle";
 
 export default defineDocs({
@@ -231,6 +231,8 @@ export default defineDocs({
   ordering: "numeric",
 
   icons: {
+    introduction: <BookOpen size={15} />,
+    quickstart: <Zap size={15} />,
     smartphone: <Smartphone size={15} />,
     rocket: <Rocket size={15} />,
     hammer: <Hammer size={15} />,
