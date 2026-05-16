@@ -222,6 +222,15 @@ code:not(pre code) {
   padding-left: 50px !important;
   padding-right: 50px !important;
 }
+/* ─── TOC items font size ─────────────────────────────────────────── */
+/* #nd-toc alone doesn't override Tailwind's text-sm on child elements */
+#nd-toc a,
+#nd-toc button,
+#nd-toc li,
+#nd-toc span,
+#nd-toc h3 {
+  font-size: 11px !important;
+}
 
 /* ─── Sidebar rail stripes (desktop) ────────────────────────────── */
 @media (min-width: 768px) {

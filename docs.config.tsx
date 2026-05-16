@@ -164,7 +164,7 @@ export default defineDocs({
           fontSize: "13px",
           color: "var(--color-fd-muted-foreground)",
           backgroundImage:
-            "repeating-linear-gradient(-45deg, color-mix(in srgb, hsl(25 100% 50%) 4%, transparent), color-mix(in srgb, hsl(25 100% 50%) 8%, transparent) 1px, transparent 1px, transparent 6px)",
+            "repeating-linear-gradient(-45deg, color-mix(in srgb, var(--color-fd-border) 2%, transparent), color-mix(in srgb, var(--color-fd-foreground) 7%, transparent) 1px, transparent 1px, transparent 6px)",
         }}
       >
         <div
@@ -214,7 +214,7 @@ export default defineDocs({
         style={{
           fontSize: "12px",
           backgroundImage:
-            "repeating-linear-gradient(-45deg, color-mix(in srgb, hsl(25 100% 50%) 3%, transparent), color-mix(in srgb, hsl(25 100% 50%) 6%, transparent) 1px, transparent 1px, transparent 6px)",
+            "repeating-linear-gradient(-45deg, color-mix(in srgb, var(--color-fd-border) 2%, transparent), color-mix(in srgb, var(--color-fd-foreground) 7%, transparent) 1px, transparent 1px, transparent 6px)",
         }}
       >
         <div
