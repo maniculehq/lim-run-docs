@@ -73,7 +73,6 @@ export default defineDocs({
       </div>
     ),
     url: "/docs",
-    links: [{ label: "GitHub", href: "https://github.com/limrun-inc" }],
   },
 
   themeToggle: {
