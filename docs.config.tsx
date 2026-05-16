@@ -195,7 +195,7 @@ export default defineDocs({
     ),
     footer: (
       <div
-        className="-mx-4 md:px-6! -my-2 -mb-4 border-t flex flex-col font-mono uppercase"
+        className="-mx-4 -my-2 -mb-4 border-t flex flex-col font-mono uppercase"
         style={{
           fontSize: "12px",
           backgroundImage:
