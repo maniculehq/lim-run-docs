@@ -126,12 +126,14 @@ body {
  * The pixel-border theme sets hover:bg to fd-muted which is near-black
  * in dark mode — invisible. Override with a visible orange-tinted card.
  */
-article a[class*="rounded-lg border"] {
+article a[class*="rounded-lg border"],
+article a[class*="rounded-xl border"] {
   background: var(--color-fd-card);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-article a[class*="rounded-lg border"]:hover {
+article a[class*="rounded-lg border"]:hover,
+article a[class*="rounded-xl border"]:hover {
   background: color-mix(in srgb, hsl(25 100% 50%) 9%, var(--color-fd-card)) !important;
   border-color: hsl(25 100% 50%) !important;
 }
