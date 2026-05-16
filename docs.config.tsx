@@ -171,9 +171,6 @@ export default defineDocs({
           className="font-mono tracking-tighter"
           style={{ fontWeight: 600, marginBottom: 4, color: "var(--color-fd-foreground)" }}
         >
-          <span style={{ opacity: 0.4 }}>
-            <Pin size={12} className="inline-flex" />{" "}
-          </span>
           <span className="text-[12px]" style={{ color: "hsl(25 100% 65%)" }}>
             Early Access
           </span>

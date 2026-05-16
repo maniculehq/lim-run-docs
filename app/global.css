@@ -139,6 +139,25 @@ article a[class*="rounded-xl border"]:hover {
   border-color: hsl(25 100% 50%) !important;
 }
 
+/* ─── Edit on GitHub action ───────────────────────────────────────── */
+.fd-page-meta a[href*="github.com"][href*="/edit/"] {
+  background: var(--color-fd-card) !important;
+  border-color: var(--color-fd-border) !important;
+  color: var(--color-fd-muted-foreground) !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+}
+
+.fd-page-meta a[href*="github.com"][href*="/edit/"]:hover {
+  background: color-mix(in srgb, hsl(25 100% 50%) 9%, var(--color-fd-card)) !important;
+  border-color: hsl(25 100% 50%) !important;
+  color: hsl(25 100% 62%) !important;
+  text-decoration: none !important;
+}
+
+.fd-page-meta a[href*="github.com"][href*="/edit/"] svg {
+  color: currentColor !important;
+}
+
 /* ─── Breadcrumb ─────────────────────────────────────────────────── */
 .fd-breadcrumb-parent,
 .fd-breadcrumb-current {
