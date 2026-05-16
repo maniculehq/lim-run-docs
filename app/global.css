@@ -26,6 +26,7 @@ body {
   --color-fd-secondary: hsl(0 0% 10%);
   --color-fd-secondary-foreground: #ffffff;
   --color-fd-muted: hsl(0 0% 10%);
+  --color-fd-muted-2: hsl(0, 0%, 73%);
   --color-fd-muted-foreground: hsl(0 0% 50%);
   --color-fd-accent: hsl(0 0% 10%);
   --color-fd-accent-foreground: #ffffff;
@@ -197,10 +198,20 @@ code:not(pre code) {
   }
  }
 
-
+.fd-page-footer {
+  margin-top: 50px !important;
+  margin-bottom: 30px !important;
+}
 .omni-empty-icon {
   background: transparent !important;
   border: 1px solid var(--color-fd-border) !important;
+}
+.prose p, .prose li, .prose td, article p {
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  font-family: "JetBrains Mono", monospace !important;
+  color: var(--color-fd-muted-2) !important;
 }
 .omni-kbd {
   background: transparent !important;
