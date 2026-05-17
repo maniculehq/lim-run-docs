@@ -26,6 +26,9 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
       CodeGroup: ({ children }: { children: React.ReactNode }) => (
         <div className="fd-tabs">{children}</div>
       ),
+      Frame: ({ children }: { children: React.ReactNode }) => (
+        <div className="docs-frame">{children}</div>
+      ),
       ...components,
     },
     {

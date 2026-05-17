@@ -6,6 +6,7 @@ import { LayoutDashboard } from "lucide-react";
 export function NavLinks() {
   return (
     <div
+      className="docs-top-nav-links"
       style={{
         position: "fixed",
         top: 0,

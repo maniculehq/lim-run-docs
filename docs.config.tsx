@@ -146,9 +146,9 @@ export default defineDocs({
     flat: false,
     banner: (
       <div
-        className="-mx-4 relative mt-2 lim-sidebar-banner"
+        className="mx-0 -mt-10 relative lim-sidebar-banner"
         style={{
-          padding: "12px 16px",
+          padding: "12px 0px",
           borderBottom: "1px solid var(--color-fd-border)",
           // borderTop: "1px solid var(--color-fd-border)",
           fontSize: "13px",
@@ -198,14 +198,14 @@ export default defineDocs({
     ),
     footer: (
       <div
-        className="-mx-4 -my-2 -mb-4 border-t border-white/5 flex flex-col"
+        className="-mx-4 -my-2 -mb-4 border-t-0 border-white/5 flex flex-col"
         style={{ fontSize: "12px" }}
       >
         <div
           className="flex px-0 pl-3 py-2 items-center justify-between"
           style={{ color: "var(--color-fd-muted-foreground)" }}
         >
-          <span style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), ui-monospace, monospace", letterSpacing: "0.02em", textTransform: "uppercase" }}>Theme</span>
+          {/* <span style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), ui-monospace, monospace", letterSpacing: "0.02em", textTransform: "uppercase" }}>Theme</span> */}
           <SidebarThemeToggle variant="pill" />
         </div>
       </div>
