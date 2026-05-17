@@ -286,9 +286,27 @@ h3 {
   font-weight: 600 !important;
 }
 
+.fd-page-body h1,
+article h1 {
+  font-size: 1.75rem !important;
+  line-height: 1.18 !important;
+}
+
+.fd-page-body h2,
+article h2 {
+  font-size: 1.375rem !important;
+  line-height: 1.25 !important;
+}
+
+.fd-page-body h3,
+article h3 {
+  font-size: 1.0625rem !important;
+  line-height: 1.35 !important;
+}
+
 .prose p, .prose li, .prose td, article p {
-  font-size: 0.9rem !important;
-  line-height: 1.65 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
   font-weight: 400 !important;
   color: var(--color-fd-muted-foreground) !important;
 }
@@ -305,7 +323,7 @@ h3 {
 
 code:not(pre code) {
   font-family: var(--fd-font-mono) !important;
-  font-size: 0.8125em !important;
+  font-size: 0.78em !important;
   padding: 0.15em 0.4em !important;
   border-radius: 4px !important;
   background: color-mix(in srgb, hsl(25 100% 50%) 10%, var(--color-fd-card)) !important;
@@ -350,7 +368,7 @@ figure.shiki,
 /* Code block filename/title bar */
 .fd-codeblock-title {
   font-family: var(--fd-font-mono) !important;
-  font-size: 0.75rem !important;
+  font-size: 0.7rem !important;
   font-weight: 400 !important;
   color: var(--color-fd-muted-foreground) !important;
   background: var(--color-fd-card) !important;
@@ -362,6 +380,20 @@ figure.shiki,
 #nd-docs-layout figure[data-rehype-pretty-code-figure],
 #nd-docs-layout figure[data-rehype-pretty-code-figure] pre {
   border-radius: 8px !important;
+}
+
+#nd-docs-layout figure[data-rehype-pretty-code-figure] pre,
+#nd-docs-layout figure.shiki pre,
+#nd-docs-layout pre {
+  font-size: 0.8rem !important;
+  line-height: 1.55 !important;
+}
+
+#nd-docs-layout figure[data-rehype-pretty-code-figure] code,
+#nd-docs-layout figure.shiki code,
+#nd-docs-layout pre code {
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
 #nd-docs-layout figure.shiki > div:first-child {
@@ -395,7 +427,7 @@ article table th {
   border-color: var(--color-fd-border) !important;
   color: color-mix(in srgb, var(--color-fd-foreground) 82%, var(--color-fd-muted-foreground)) !important;
   font-family: var(--fd-font-sans) !important;
-  font-size: 0.78rem !important;
+  font-size: 0.75rem !important;
   font-weight: 600 !important;
   letter-spacing: 0 !important;
 }
@@ -452,6 +484,17 @@ article a[data-card]:hover h3 {
   border-radius: 4px !important;
   font-family: var(--fd-font-mono) !important;
   font-weight: 700 !important;
+}
+@media (min-width: 80rem) {
+  .xl\:pt-14 {
+      padding-top: 36px;
+  }
+}
+.fd-last-updated-inline {
+  font-size: 0.1125rem !important;
+  /* font-family: var(--font-geist-mono), ui-monospace, monospace !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important; */
 }
 
 .fd-steps > li {
@@ -515,15 +558,15 @@ article a[data-card]:hover h3 {
 
 .fd-page-actions .fd-page-action-btn,
 [data-page-actions] .fd-page-action-btn {
-  height: 2rem !important;
-  padding: 0 0.75rem !important;
+  height: 1.92rem !important;
+  padding: 0 0.65rem !important;
   border: 1px solid var(--color-fd-border) !important;
   border-radius: 6px !important;
-  background: var(--color-fd-secondary) !important;
+  background: transparent !important;
   box-shadow: none !important;
   color: var(--color-fd-muted-foreground) !important;
   font-family: var(--fd-font-sans) !important;
-  font-size: 0.8125rem !important;
+  font-size: 0.7125rem !important;
   font-weight: 400 !important;
   letter-spacing: normal !important;
   line-height: 1 !important;

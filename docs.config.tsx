@@ -85,7 +85,7 @@ export default defineDocs({
 
   breadcrumb: { enabled: true },
 
-  lastUpdated: { enabled: true, position: "below-title" },
+  lastUpdated: { enabled: true, position: "footer" },
 
   readingTime: {
     enabled: true,
@@ -94,7 +94,7 @@ export default defineDocs({
 
   pageActions: {
     copyMarkdown: { enabled: true },
-    alignment: "left",
+    alignment: "right",
     openDocs: {
       enabled: true,
       providers: [
