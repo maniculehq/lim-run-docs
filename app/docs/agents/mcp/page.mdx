@@ -10,7 +10,7 @@ Every iOS and Android instance Limrun creates has its own Model Context Protocol
 
 - **One server per instance, not one shared endpoint.** The URL is in `instance.status.mcpUrl`.
 - **Auth uses your org API key**, not `instance.status.token`. Pass it as `Authorization: Bearer lim_…`.
-- **The tools are the same ones the SDK exposes** for controlling a simulator: screenshots, taps, element tree, text input, app launch, app terminate, scrolling, deep links, recording.
+- **Five tools per iOS instance.** A combined screenshot + element-tree tool, one batch tool (`ios-use`) that carries every UI action, plus dedicated tools for app lifecycle, logs, and deep links. See [What the MCP server exposes](#what-the-mcp-server-exposes) below.
 
 This page covers when to use MCP instead of the CLI, how to find the URL, and how to wire it into Claude Code, Claude Desktop, Cursor, Codex, and custom MCP clients.
 
@@ -147,17 +147,30 @@ Any MCP client with HTTP transport works. Pass the `mcpUrl` as the endpoint and 
 
 ## What the MCP server exposes
 
-The hosted MCP server has the same device-control set as `Ios.createInstanceClient` (iOS) and the equivalent Android client:
+Each iOS instance exposes five MCP tools. The bulk of the device-control surface lives in a single batch tool (`ios-use`); the others handle the read-state loop, app management, logs, and deep links.
 
-- **Visual**: screenshot
-- **State**: element-tree
-- **Touch**: tap, tap-element by accessibility selector, scroll
-- **Input**: type, press key, toggle keyboard
-- **Navigation**: open URL or deep link
-- **App lifecycle**: launch app, terminate app
-- **Recording**: start or stop a video recording
+| Tool | What it does |
+|---|---|
+| `ios-screenshot-and-element-tree` | Returns the current screenshot and the accessibility tree in one call. The agent calls this before each `ios-use` batch to know what's on the screen. |
+| `ios-use` | Runs an ordered list of UI actions: tap, type, scroll, recording, orientation, multi-touch, StoreKit testing, soft reset, and more. See the action kinds below. |
+| `ios-app` | List, launch, or terminate installed apps. (Does not install apps; use the CLI or per-instance REST for that.) |
+| `ios-open-url` | Open a URL or a deep link. Preferred over the `openUrl` action inside `ios-use`. |
+| `ios-logs` | Tail combined stdout/stderr for an installed app's bundle ID. |
 
-Parameter shapes and full reference for each operation live on [Run an iOS Simulator](/docs/ios/run-simulator) and [Run an Android Emulator](/docs/android/run-emulator).
+### `ios-use` action kinds
+
+A single `ios-use` call carries an ordered `actions` array. The `kind` field on each item selects the action:
+
+- **Tap and select**: `tap`, `tapElement`, `incrementElement`, `decrementElement`, `setElementValue`
+- **Input**: `type`, `pressKey`, `toggleKeyboard`
+- **Movement**: `scroll`, `setOrientation`
+- **Low-level HID**: `touchDown`, `touchMove`, `touchUp`, `keyDown`, `keyUp`, `buttonDown`, `buttonUp`
+- **Recording**: `startRecording`, `stopRecording`
+- **State and reset**: `deviceInfo`, `wait`, `softReset`
+- **StoreKit testing**: `discoverStoreKitConfig`, `clearStoreKitConfig`
+- **Navigation**: `openUrl` (prefer the `ios-open-url` tool above)
+
+For action parameters (selector fields, coordinates, durations) and the full per-method reference, see [Run an iOS Simulator](/docs/ios/run-simulator). For the Android equivalent, see [Run an Android Emulator](/docs/android/run-emulator).
 
 ## Build your own MCP server around `lim`
 
