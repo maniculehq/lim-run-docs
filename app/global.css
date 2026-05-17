@@ -668,7 +668,6 @@ article a[data-card]:hover h3 {
 /* Nav link items (Support / Dashboard) */
 .nav-link-item {
   font-size: 0.8125rem !important;
-  font-family: var(--fd-font-sans) !important;
   color: var(--color-fd-muted-foreground) !important;
   padding: 0.25rem 0.5rem !important;
   border-radius: 5px !important;
@@ -677,12 +676,13 @@ article a[data-card]:hover h3 {
   white-space: nowrap !important;
 }
 
-.nav-link-item:hover {
-  color: var(--color-fd-foreground) !important;
-  background: var(--color-fd-accent) !important;
-}
 
 .nav-link-dashboard {
+  font-family: var(--font-geist-mono), ui-monospace, monospace !important;
+  letter-spacing: 0.02em !important;
+  font-size: 0.7125rem !important;
+  font-weight: lighter !important;
+  text-transform: uppercase !important;
   background: hsl(25 100% 50%) !important;
   color: #000 !important;
   font-weight: 600 !important;
@@ -776,16 +776,17 @@ article a[data-card]:hover h3 {
 }
 
 /* llms.txt / llms-full.txt pill links */
-.fd-page-footer a[href*="llms"] {
+a[href*="llms"] {
   border: 1px solid var(--color-fd-border) !important;
   padding: 2px 8px !important;
   border-radius: 5px !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
 }
 
-.fd-page-footer a[href*="llms"]:hover {
-  border-color: hsl(25 100% 50%) !important;
+a[href*="llms"]:hover {
+  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
   color: hsl(25 100% 62%) !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, transparent) !important;
+  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════

@@ -1,5 +1,8 @@
 "use client";
 
+import Layout from "@/app/docs/layout";
+import { LayoutDashboard } from "lucide-react";
+
 export function NavLinks() {
   return (
     <div
@@ -16,21 +19,22 @@ export function NavLinks() {
         pointerEvents: "auto",
       }}
     >
-      <a
+      {/* <a
         href="https://console.limrun.com/docs/support"
         target="_blank"
         rel="noreferrer"
         className="nav-link-item"
       >
         Support
-      </a>
+      </a> */}
       <a
         href="https://console.limrun.com"
         target="_blank"
         rel="noreferrer"
-        className="nav-link-item nav-link-dashboard"
+        className="nav-link-item font-lighter! flex gap-2 items-center font-mono uppercase nav-link-dashboard"
       >
-        Dashboard
+        <LayoutDashboard size={16} />
+       Console 
       </a>
     </div>
   );
