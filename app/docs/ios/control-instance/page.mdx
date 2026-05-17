@@ -12,9 +12,7 @@ control surface gives you everything you need to drive the simulator from code: 
 manage app lifecycle, observe the screen, send input, batch interactions, stream logs, and drop to
 `simctl` for anything outside the typed API.
 
-<Accordions>
-  <Accordion title="Copy this prompt for your coding agent">
-    ```text
+<Agent>
     You are helping a developer control an iOS simulator on Limrun. Assume the user already has an IosInstance.
 
     Prefer this order when scripting an interaction:
@@ -27,9 +25,7 @@ manage app lifecycle, observe the screen, send input, batch interactions, stream
     7. Drop to client.simctl(args) only when the typed surface doesn't cover what you need.
 
     Read /ios/control-instance.md for the full method reference.
-    ```
-  </Accordion>
-</Accordions>
+</Agent>
 
 ## Prerequisites
 

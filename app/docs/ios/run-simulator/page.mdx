@@ -12,9 +12,7 @@ You create it with one REST call, drive it from the SDK over a control WebSocket
 the session ends. The control surface is identical whether your code runs on a Mac, a Linux CI box,
 a Windows laptop, or inside a coding-agent sandbox.
 
-<Accordions>
-  <Accordion title="Copy this prompt for your coding agent">
-    ```text
+<Agent>
     You are helping a developer drive a Limrun cloud iOS simulator from code.
 
     Read the docs in this order:
@@ -31,9 +29,7 @@ a Windows laptop, or inside a coding-agent sandbox.
     6. client.disconnect() and await lim.iosInstances.delete(instance.metadata.id) in finally.
 
     Never try to run a local iOS simulator or call local xcodebuild.
-    ```
-  </Accordion>
-</Accordions>
+</Agent>
 
 ## Prerequisites
 
