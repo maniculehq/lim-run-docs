@@ -79,6 +79,12 @@ aside a > img:first-child {
   display: none !important;
 }
 
+.lim-sidebar-banner a > svg:first-child,
+.lim-sidebar-banner a > img:first-child {
+  display: block !important;
+  flex-shrink: 0 !important;
+}
+
 /* Search button */
 aside button[class*="bg-fd-secondary"] {
   background: var(--color-fd-secondary) !important;
@@ -287,12 +293,33 @@ figure.shiki,
  * TABLES
  * ═══════════════════════════════════════════════════════════════════ */
 
-.fd-page-body table th {
-  background: var(--color-fd-secondary) !important;
-  font-size: 0.8125rem !important;
-  font-weight: 500 !important;
-  color: var(--color-fd-muted-foreground) !important;
-  border-bottom: 1px solid var(--color-fd-border) !important;
+.fd-page-body table,
+article table {
+  overflow: hidden !important;
+  border: 1px solid var(--color-fd-border) !important;
+  border-radius: 8px !important;
+}
+
+.fd-page-body table thead,
+article table thead {
+  background: color-mix(in srgb, var(--color-fd-card) 82%, var(--color-fd-foreground) 4%) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 85%, hsl(25 100% 50%) 15%) !important;
+}
+
+.fd-page-body table th,
+article table th {
+  background: transparent !important;
+  border-color: var(--color-fd-border) !important;
+  color: color-mix(in srgb, var(--color-fd-foreground) 82%, var(--color-fd-muted-foreground)) !important;
+  font-family: var(--fd-font-sans) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+.fd-page-body table th code,
+article table th code {
+  font-weight: 600 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -384,7 +411,12 @@ article a[class*="rounded-xl border"]:hover {
 
 .fd-page-actions,
 [data-page-actions] {
-  gap: 0 !important;
+  gap: 0.5rem !important;
+}
+@media (min-width: 768px) {
+  .fd-page-actions {
+    margin-bottom: 15px !important;
+  }
 }
 
 .fd-page-actions .fd-page-action-btn,
@@ -407,13 +439,13 @@ article a[class*="rounded-xl border"]:hover {
 
 .fd-page-actions > .fd-page-action-btn:not(:last-child),
 [data-page-actions] > .fd-page-action-btn:not(:last-child) {
-  border-right-color: transparent !important;
-  border-radius: 6px 0 0 6px !important;
+  border-right-color: var(--color-fd-border) !important;
+  border-radius: 6px !important;
 }
 
 .fd-page-actions > .fd-page-action-btn:not(:first-child),
 [data-page-actions] > .fd-page-action-btn:not(:first-child) {
-  border-radius: 0 6px 6px 0 !important;
+  border-radius: 6px !important;
 }
 
 .fd-page-actions > .fd-page-action-btn:only-child,
@@ -443,6 +475,23 @@ article a[class*="rounded-xl border"]:hover {
   width: 13px !important;
   height: 13px !important;
   color: currentColor !important;
+}
+
+.fd-feedback .fd-page-action-btn,
+.fd-feedback .fd-feedback-choice,
+.fd-feedback .fd-feedback-submit {
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+.fd-feedback .fd-page-action-btn:hover,
+.fd-feedback .fd-page-action-btn:focus-visible,
+.fd-feedback .fd-feedback-choice[data-selected="true"],
+.fd-feedback .fd-feedback-choice[aria-pressed="true"],
+.fd-feedback .fd-feedback-submit:hover,
+.fd-feedback .fd-feedback-submit:focus-visible {
+  box-shadow: none !important;
 }
 
 .fd-page-action-menu {
@@ -493,6 +542,48 @@ article a[class*="rounded-xl border"]:hover {
   #nd-docs-layout {
     --fd-docs-height: calc(100dvh - 56px) !important;
     margin-top: 56px !important;
+  }
+
+  [data-sidebar-placeholder] {
+    position: relative !important;
+    align-self: start !important;
+    height: calc(100dvh - 56px) !important;
+    max-height: calc(100dvh - 56px) !important;
+    overflow: clip !important;
+  }
+
+  #nd-sidebar {
+    position: fixed !important;
+    inset-block: 56px 0 !important;
+    inset-inline-start: max(0px, calc((100vw - var(--fd-layout-width, 97rem)) / 2)) !important;
+    width: var(--fd-sidebar-width, 280px) !important;
+    height: calc(100dvh - 56px) !important;
+    max-height: calc(100dvh - 56px) !important;
+    overflow: hidden !important;
+    z-index: 20 !important;
+  }
+
+  #nd-sidebar > div:first-child,
+  #nd-sidebar > div:last-child {
+    flex: 0 0 auto !important;
+  }
+
+  #nd-sidebar [data-radix-scroll-area-viewport] {
+    max-height: 100% !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+  }
+
+  #nd-toc {
+    position: fixed !important;
+    top: 56px !important;
+    inset-inline-end: max(1rem, calc((100vw - var(--fd-layout-width, 97rem)) / 2)) !important;
+    width: var(--fd-toc-width, 268px) !important;
+    height: calc(100dvh - 56px) !important;
+    max-height: calc(100dvh - 56px) !important;
+    overflow: hidden !important;
+    z-index: 10 !important;
+    padding-top: 3rem !important;
   }
 
   /* Hide sidebar logo (nav-title) to avoid duplication with the fixed header */
