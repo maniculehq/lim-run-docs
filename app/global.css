@@ -758,6 +758,12 @@ article a[data-card]:hover h3 {
  * ═══════════════════════════════════════════════════════════════════ */
 
 .fd-page-footer {
+  display: flex !important;
+  width: 100% !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.5rem !important;
+  flex-wrap: wrap !important;
   border-top: 1px solid var(--color-fd-border) !important;
   margin-top: 3rem !important;
   margin-bottom: 2rem !important;
@@ -775,10 +781,20 @@ article a[data-card]:hover h3 {
   color: hsl(25 100% 62%) !important;
 }
 
-/* llms.txt / llms-full.txt pill links */
+.fd-page-footer .fd-llms-txt-links {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0.5rem !important;
+  font-size: 0.65rem !important;
+  margin-left: auto !important;
+  margin-inline-start: auto !important;
+}
+
 a[href*="llms"] {
   border: 1px solid var(--color-fd-border) !important;
   padding: 2px 8px !important;
+  font-size: 0.65rem !important;
   border-radius: 5px !important;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
 }
