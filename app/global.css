@@ -130,9 +130,20 @@ button[aria-label="Expand Sidebar"] {
 /* Folder nodes (DIV[data-state]) are top-level siblings of page links.
    Add a separator line above each folder to split logical groups. */
 #nd-sidebar [class*="overscroll"] > div > div[data-state] {
+  position: relative !important;
   margin-top: 1rem !important;
   padding-top: 0.875rem !important;
-  border-top: 1px solid var(--color-fd-border) !important;
+  border-top: none !important;
+}
+
+#nd-sidebar [class*="overscroll"] > div > div[data-state]::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  inset-inline: -1rem !important;
+  height: 1px !important;
+  background: var(--color-fd-border) !important;
+  pointer-events: none !important;
 }
 
 /* Sidebar links — default */
@@ -330,13 +341,24 @@ article a[class*="rounded-lg border"],
 article a[class*="rounded-xl border"] {
   background: var(--color-fd-card);
   border-color: var(--color-fd-border) !important;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+article [data-card] h3 {
+  font-size: 0.8125rem !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
 }
 
 article a[class*="rounded-lg border"]:hover,
 article a[class*="rounded-xl border"]:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-card)) !important;
-  border-color: hsl(25 100% 50%) !important;
+  background: color-mix(in srgb, hsl(25 100% 50%) 6%, var(--color-fd-card)) !important;
+  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
+  color: var(--color-fd-card-foreground) !important;
+}
+
+article a[data-card]:hover h3 {
+  color: hsl(25 100% 62%) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -465,9 +487,9 @@ article a[class*="rounded-xl border"]:hover {
 [data-page-actions] .fd-page-action-btn:hover,
 [data-page-actions] .fd-page-action-btn[aria-expanded="true"],
 [data-page-actions] .fd-page-action-btn[data-copied="true"] {
-  background: var(--color-fd-accent) !important;
-  border-color: var(--color-fd-foreground) !important;
-  color: var(--color-fd-foreground) !important;
+  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
+  color: hsl(25 100% 62%) !important;
 }
 
 .fd-page-actions .fd-page-action-btn svg,

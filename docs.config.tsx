@@ -150,7 +150,7 @@ export default defineDocs({
         style={{
           padding: "12px 16px",
           borderBottom: "1px solid var(--color-fd-border)",
-          borderTop: "1px solid var(--color-fd-border)",
+          // borderTop: "1px solid var(--color-fd-border)",
           fontSize: "13px",
           color: "var(--color-fd-muted-foreground)",
         }}
