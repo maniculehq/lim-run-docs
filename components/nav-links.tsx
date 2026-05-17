@@ -32,7 +32,7 @@ export function NavLinks() {
         href="https://console.limrun.com"
         target="_blank"
         rel="noreferrer"
-        className="nav-link-item font-lighter! flex gap-2 items-center font-mono uppercase nav-link-dashboard"
+        className="nav-link-item font-lighter! flex gap-2 dark:text-black! text-white! items-center font-mono uppercase nav-link-dashboard"
       >
         <LayoutDashboard size={16} />
        Console 

@@ -806,7 +806,7 @@ article a[data-card]:hover h3 {
 
 /* Nav link items (Support / Dashboard) */
 .nav-link-item {
-  font-size: 0.8125rem !important;
+  font-size: 0.6125rem !important;
   color: var(--color-fd-muted-foreground) !important;
   padding: 0.25rem 0.5rem !important;
   border-radius: 5px !important;
@@ -834,8 +834,8 @@ article a[data-card]:hover h3 {
   text-transform: uppercase !important;
   background: hsl(25 100% 50%) !important;
   color: #000 !important;
-  font-weight: 600 !important;
-  padding: 0.25rem 0.75rem !important;
+  font-weight: 400 !important;
+  padding: 0.4rem 0.75rem !important;
 }
 
 :root:not(.dark) .nav-link-dashboard,
