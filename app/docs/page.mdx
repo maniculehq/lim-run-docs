@@ -1,46 +1,76 @@
 ---
-title: Introduction
-description: Run Xcode and iOS sandboxes in the cloud, controllable from any language or coding agent.
+title: "Introduction"
+description: "Limrun is cloud infrastructure for mobile development. Run iOS simulators, Android emulators, and Xcode builds in the cloud, controlled through one CLI or SDK."
 order: 1
 icon: introduction
 ---
+# Introduction
 
-# lim.run
+Mobile development is bound to platform-specific hardware: macOS for iOS, accelerated emulators for Android, physical devices for testing. Limrun runs that hardware as on-demand cloud services, so any process can build iOS apps without a Mac, test on simulators from a CI runner, embed a live simulator in a web app, or share a preview URL reviewers open in any browser.
 
-Limrun gives cloud coding agents (Claude Code, Cursor, Codex) hands-on access to remote iOS simulators
-with attached Xcode sandboxes. No local Mac. No `xcodebuild` running on the agent's host.
+## Three products
 
-The agent issues `lim` commands, Limrun handles the build and the simulator, and you watch the device
-stream live in a browser.
+Limrun is three composable cloud services:
 
-## What you can do
+| Product | What it is | What you do with it |
+|---|---|---|
+| iOS simulator | A real Mac running the iOS Simulator | Stream it in a browser. Drive it programmatically: taps, screenshots, video, app launch, log streaming, element queries. |
+| Xcode build sandbox | A real Mac running `xcodebuild` | Sync your source, run `xcodebuild` remotely, get the logs back. |
+| Android emulator | A booted emulator with an ADB tunnel | Local Android Studio, Appium, and scrcpy attach as if it were a USB device. |
 
-- **Remote iOS builds** — Run `xcodebuild` on a hosted Xcode instance from Linux, Windows, or CI
-- **iOS simulator control** — Tap, type, scroll, take screenshots, and record video via the TypeScript SDK or CLI
-- **MCP integration** — Each instance exposes a Model Context Protocol server, plug directly into Claude Desktop, Cursor, or Codex
-- **Any agent, any OS** — The `lim` CLI and `@limrun/api` SDK work identically on every platform
+The iOS simulator and Xcode sandbox can be created as a paired instance in one call. A successful build auto-installs on the attached simulator, which is the most common shape.
 
-## Quick navigation
+Limrun also offers **Asset Storage** for build artifacts: `.ipa`, `.apk`, and `.app.tar.gz` files. Upload once, then pre-install on new instances or share via preview URLs.
+
+## How it works
+
+Getting started is short:
+
+1. Install the CLI in your environment (or pull the SDK in your language).
+2. Authenticate by setting `LIM_API_KEY`.
+3. Create an instance: iOS, Android, or paired iOS + Xcode in one call.
+4. Use it. Build, drive the simulator, stream it, or attach to its ADB tunnel.
+5. Tear it down. Inactivity timeouts handle this for you if you forget.
+
+See the [Quickstart](/docs/quickstart) for a three-minute walkthrough.
+
+## Common use cases
+
+**Shipping iOS or Android code from a cloud coding agent.** A coding agent picks up a ticket on its Linux VM, calls Limrun to build and run the app on a real Mac, drives the simulator to verify the change, and posts a preview link on the PR for reviewers.
+
+**Mobile builds and tests from Linux CI.** Run `xcodebuild` from a Linux runner, drive Appium tests against cloud simulators, post artifacts and preview links on every PR. No macOS minutes required.
+
+**Embedded simulators inside a product.** A backend creates instances on behalf of users; the frontend embeds `<RemoteControl />` from `@limrun/ui` to stream the live simulator into the product UI.
+
+The CLI wraps the SDK; both reach every operation.
+
+## Architecture
+
+<Frame>
+  <img src="/images/diagrams/architecture.png" alt="Two-stage architecture diagram. The control plane at api.limrun.com is authenticated with the org API key. Each instance returns a per-instance token plus URLs for HTTP control, WebSocket control, the browser stream, the MCP server, and on Android the ADB tunnel." />
+</Frame>
+
+An *instance* is anything you create through Limrun: an iOS simulator, an Android emulator, or an Xcode build sandbox. Each one has an ID, exposes its own endpoints, and lives until you delete it or its inactivity timeout fires.
+
+Limrun is split into a control plane (where you create and manage instances) and per-instance data planes (where you actually interact with each instance). Your org API key authenticates the control plane and the per-instance MCP server; each instance returns its own per-instance token for everything else.
+
+Each instance also exposes a signed stream URL with a token baked into it. Anyone with the URL can open the running simulator in a browser without signing in.
+
+The CLI, SDKs, and `<RemoteControl />` all wrap the same REST surface. MCP-aware tools can call the per-instance MCP server directly.
+
+## How to get started
 
 <Cards>
-  <Card
-    title="Quickstart"
-    description="Up and running in 3 minutes — CLI install, auth, and first iOS instance."
-    href="/docs/quickstart"
-  />
-  <Card
-    title="Build with Remote Xcode"
-    description="Sync source, run xcodebuild remotely, and auto-install on the simulator."
-    href="/docs/ios/build-with-xcode"
-  />
-  <Card
-    title="Run an iOS Simulator"
-    description="Provision, connect, and control a cloud iPhone or iPad simulator."
-    href="/docs/ios/run-simulator"
-  />
-  <Card
-    title="Control an iOS Instance"
-    description="Full device-control API — apps, input, element tree, recordings, simctl."
-    href="/docs/ios/control-instance"
-  />
+  <Card title="Quickstart" href="/docs/quickstart">
+    Get the CLI installed and run an iOS app on a remote simulator in three minutes.
+  </Card>
+  <Card title="CLI for coding agents" href="/docs/agents/cli">
+    The cookbook page coding agents use to drive a build, test, ship loop.
+  </Card>
+  <Card title="Embed the simulator" href="/docs/platform/embed-simulator">
+    Stream a live iOS or Android instance into your web app with `<RemoteControl />` from `@limrun/ui`.
+  </Card>
+  <Card title="Build with remote Xcode" href="/docs/ios/build-with-xcode">
+    Source sync, `xcodebuild` over SSE, code signing, IPA upload to Asset Storage.
+  </Card>
 </Cards>
