@@ -78,17 +78,6 @@ export default defineDocs({
         >
           lim.run
         </span>
-        <span
-          style={{
-            fontFamily: "var(--font-geist-sans), 'Geist', sans-serif",
-            fontSize: "0.7rem",
-            letterSpacing: "0.1em",
-            opacity: 0.45,
-            textTransform: "uppercase",
-          }}
-        >
-          docs
-        </span>
       </div>
     ),
     url: "/docs",
