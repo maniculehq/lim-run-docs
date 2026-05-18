@@ -1138,12 +1138,54 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
     --fd-toc-popover-height: 40px !important;
   }
 
+  [data-toc-popover-content] {
+    border-color: color-mix(
+      in srgb,
+      var(--color-fd-border) 72%,
+      transparent
+    ) !important;
+  }
+
   [data-toc-popover-content] > div {
     padding-top: 0 !important;
   }
 
   [data-toc-popover-content] [data-radix-scroll-area-viewport] > div {
     padding-top: 0 !important;
+  }
+
+  [data-toc-popover-content] .py-3 {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  [data-toc-popover-content] ul,
+  [data-toc-popover-content] ol,
+  [data-toc-popover-content] li {
+    gap: 0 !important;
+    margin-block: 0 !important;
+  }
+
+  [data-toc-popover-content] a {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 2rem !important;
+    padding-block: 0.35rem !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  [data-toc-popover-content] a span {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  [data-toc-popover-content] svg {
+    flex-shrink: 0 !important;
   }
 
   [data-toc-popover-content] a:first-of-type {
