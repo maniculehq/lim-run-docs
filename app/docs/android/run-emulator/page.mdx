@@ -438,30 +438,30 @@ Anything you want to upload once and reuse goes through [Asset Storage](/docs/pl
 
 ### Example response
 
-A successful `create` returns the full instance resource. URLs are truncated for legibility but the field set is exactly what comes off the wire.
+A successful `create` returns the full instance resource.
 
 ```json
 {
   "metadata": {
-    "id": "android_euna_01krx34kfre3m99md4p7hnb7y0",
-    "createdAt": "2026-05-18T08:27:15Z",
-    "organizationId": "org_01j...",
+    "id": "android_euna_01krxvphn8e3rbeq0zewgw209a",
+    "createdAt": "2026-05-18T15:36:29Z",
+    "organizationId": "org_01kr52j...",
+    "displayName": "docs-test",
     "labels": { "app": "demo", "session": "docs" }
   },
   "spec": {
-    "region": "eu-north1",
     "inactivityTimeout": "10m0s",
-    "hardTimeout": "0s"
+    "region": "eu-north1"
   },
   "status": {
     "state": "ready",
-    "apiUrl":               "https://eu-north1-29-...limrun.net/v1/android_euna_01krx34kfre3m99md4p7hnb7y0",
-    "adbWebSocketUrl":      "wss://eu-north1-29-...limrun.net/v1/android_euna_01krx34kfre3m99md4p7hnb7y0/adb",
-    "endpointWebSocketUrl": "wss://eu-north1-29-...limrun.net/v1/android_euna_01krx34kfre3m99md4p7hnb7y0/ws",
-    "signedStreamUrl":      "https://console.limrun.com/embed?id=android_euna_01krx34kfre3m99md4p7hnb7y0&token=...",
-    "mcpUrl":               "https://eu-north1-29-...limrun.net/v1/android_euna_01krx34kfre3m99md4p7hnb7y0/mcp",
-    "targetHttpPortUrlPrefix": "https://eu-north1-29-...limrun.net/v1/android_euna_01krx34kfre3m99md4p7hnb7y0/proxy/",
-    "token": "..."
+    "apiUrl":               "https://eu-hel1-32-2673227.limrun.net/v1/android_euna_01krxv.../api",
+    "adbWebSocketUrl":      "wss://eu-hel1-32-2673227.limrun.net/v1/organizations/org_01kr52j.../android.limrun.com/v1/instances/android_euna_01krxv.../adbWebSocket",
+    "endpointWebSocketUrl": "wss://eu-hel1-32-2673227.limrun.net/v1/organizations/org_01kr52j.../android.limrun.com/v1/instances/android_euna_01krxv.../endpointWebSocket",
+    "signedStreamUrl":      "https://console.limrun.com/signedStream?token=lim_...&url=wss%3A%2F%2Feu-hel1-32-2673227.limrun.net%2F...%2FendpointWebSocket",
+    "mcpUrl":               "https://eu-hel1-32-2673227.limrun.net/v1/android_euna_01krxv.../mcp",
+    "targetHttpPortUrlPrefix": "wss://eu-hel1-32-2673227.limrun.net/v1/organizations/org_01kr52j.../android.limrun.com/v1/instances/android_euna_01krxv.../targetHttpPort",
+    "token": "lim_..."
   }
 }
 ```
@@ -483,7 +483,7 @@ A successful `create` returns the full instance resource. URLs are truncated for
 | `status.endpointWebSocketUrl` | WebSocket endpoint for the [`<RemoteControl />` web component](/docs/platform/embed-simulator) (append `?token=`). |
 | `status.signedStreamUrl` | Console-hosted watch URL with the token baked in. Open in a browser without your API key. |
 | `status.mcpUrl` | Per-instance MCP HTTP endpoint. Authenticate with your **org API key**, not `status.token`. See [MCP](/docs/agents/mcp). |
-| `status.targetHttpPortUrlPrefix` | Reverse-proxy prefix for tunneled HTTP ports running on the device. |
+| `status.targetHttpPortUrlPrefix` | WebSocket prefix (`wss://...`) for reaching HTTP services running on the device. Append your target port to the prefix to forward traffic through. |
 | `status.sandbox.playwrightAndroid.url` | Chrome DevTools Protocol URL when the Playwright sub-sandbox is enabled. |
 | `status.token` | Per-instance bearer for `apiUrl`, `adbWebSocketUrl`, and `endpointWebSocketUrl`. Embedded in `signedStreamUrl`. |
 
@@ -638,7 +638,7 @@ const url = await client.stopRecording({ localPath: '/tmp/demo.mp4' });
 
 </CodeGroup>
 
-`quality` accepts the integers `5` through `10`. Higher values increase bitrate and file size. A 3-second clip at `5` lands around 230 KB; at `10` it's a few megabytes.
+`quality` accepts the integers `5` through `10`. Higher values increase bitrate and file size.
 
 On the SDK, pick the sink that matches where the file should live:
 
