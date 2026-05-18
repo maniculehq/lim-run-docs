@@ -710,6 +710,7 @@ article a[data-card="true"] p,
  * ═══════════════════════════════════════════════════════════════════ */
 
 div[style*="--callout-color"] {
+  --callout-color: hsl(25 100% 55%) !important;
   background: color-mix(in srgb, var(--callout-color) 7%, var(--color-fd-card)) !important;
   border: 1px solid color-mix(in srgb, var(--callout-color) 28%, var(--color-fd-border)) !important;
   border-left-width: 3px !important;
