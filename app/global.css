@@ -305,16 +305,136 @@ article h3 {
 }
 
 .prose p, .prose li, .prose td, article p {
-  font-size: 0.875rem !important;
-  line-height: 1.6 !important;
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
   font-weight: 400 !important;
   color: var(--color-fd-muted-foreground) !important;
 }
 
-/* h1 underline */
-.fd-page-body h1 {
-  border-bottom: 1px solid var(--color-fd-border);
-  padding-bottom: 0.6rem;
+/* ═══════════════════════════════════════════════════════════════════
+ * RIGHT-HAND TOC — bumped width.
+ *
+ * The framework's TOC container ships with a tailwind class that
+ * pins --fd-toc-width to 268px at the xl breakpoint, which clobbers
+ * the value we set in docs.config (300). Force the larger value at
+ * every breakpoint that shows the TOC.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+#nd-toc,
+[style*="--fd-toc-width"] {
+  --fd-toc-width: 300px !important;
+}
+
+@media (min-width: 1024px) {
+  #nd-toc {
+    width: 300px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * PAGE TITLE BLOCK — Vercel-style compact
+ *
+ * The framework renders:
+ *   <h1>Title</h1>
+ *   <p class="fd-page-description">…</p>
+ *   <div class="fd-below-title-block">
+ *     <hr class="fd-title-separator" />
+ *     [reading time]
+ *   </div>
+ *
+ * The defaults leave too much vertical space between elements and add
+ * a horizontal rule between the description and the reading time.
+ * Vercel docs run them tighter and skip the rule.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.fd-page-body h1,
+article h1 {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.fd-page-description {
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  color: color-mix(in srgb, var(--color-fd-muted-foreground) 88%, var(--color-fd-foreground)) !important;
+}
+
+.fd-below-title-block {
+  margin-top: 0.25rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+/* Single thin divider between the title block and the page body. */
+.fd-title-separator {
+  display: block !important;
+  border: none !important;
+  border-top: 1px solid var(--color-fd-border) !important;
+  margin: 0.5rem 0 0 !important;
+  opacity: 0.9 !important;
+}
+
+/* Slim down the reading-time row so it sits compactly under the
+ * description rather than floating in dead space. */
+.fd-page-meta,
+.fd-reading-time {
+  font-family: var(--fd-font-mono) !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--color-fd-muted-foreground) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * INLINE LINKS — orange underline so they don't read as bold
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.fd-page-body p a,
+.fd-page-body li a,
+.fd-page-body td a,
+.fd-page-body strong a,
+.fd-page-body em a,
+article p a,
+article li a,
+article td a,
+article strong a,
+article em a {
+  color: hsl(25 100% 62%) !important;
+  text-decoration: underline !important;
+  text-decoration-color: color-mix(in srgb, hsl(25 100% 50%) 60%, transparent) !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 0.22em !important;
+  font-weight: inherit !important;
+  transition: text-decoration-color 0.12s ease, color 0.12s ease !important;
+}
+
+.fd-page-body p a:hover,
+.fd-page-body li a:hover,
+.fd-page-body td a:hover,
+.fd-page-body strong a:hover,
+.fd-page-body em a:hover,
+article p a:hover,
+article li a:hover,
+article td a:hover,
+article strong a:hover,
+article em a:hover {
+  color: hsl(25 100% 70%) !important;
+  text-decoration-color: hsl(25 100% 62%) !important;
+}
+
+/* Card / anchor blocks (which already have their own border styling)
+ * should keep their own look — exclude them from the inline-link rule above. */
+.fd-page-body p a[class*="rounded"],
+.fd-page-body p a[data-card="true"],
+article p a[class*="rounded"],
+article p a[data-card="true"] {
+  text-decoration: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -405,73 +525,212 @@ figure.shiki,
 }
 
 /* ═══════════════════════════════════════════════════════════════════
- * TABLES
+ * TABLES — Vercel-style: no outer border, just subtle row dividers,
+ * header in muted uppercase, compact rows.
  * ═══════════════════════════════════════════════════════════════════ */
 
 .fd-page-body table,
 article table {
-  overflow: hidden !important;
-  border: 1px solid var(--color-fd-border) !important;
-  border-radius: 8px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+  font-size: 0.9375rem !important;
 }
 
 .fd-page-body table thead,
 article table thead {
-  background: color-mix(in srgb, var(--color-fd-card) 82%, var(--color-fd-foreground) 4%) !important;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 85%, hsl(25 100% 50%) 15%) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--color-fd-border) !important;
 }
 
 .fd-page-body table th,
 article table th {
   background: transparent !important;
-  border-color: var(--color-fd-border) !important;
-  color: color-mix(in srgb, var(--color-fd-foreground) 82%, var(--color-fd-muted-foreground)) !important;
+  border: none !important;
+  color: var(--color-fd-muted-foreground) !important;
   font-family: var(--fd-font-sans) !important;
   font-size: 0.75rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  text-align: left !important;
+  padding: 0.625rem 0.875rem !important;
+}
+
+.fd-page-body table tbody tr,
+article table tbody tr {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 60%, transparent) !important;
+}
+
+.fd-page-body table tbody tr:last-child,
+article table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+.fd-page-body table td,
+article table td {
+  border: none !important;
+  padding: 0.7rem 0.875rem !important;
+  vertical-align: top !important;
+  color: var(--color-fd-foreground) !important;
+  line-height: 1.55 !important;
+}
+
+/* Code in header cells should match header weight, not bold. */
+.fd-page-body table th code,
+article table th code {
+  font-weight: 500 !important;
+  font-size: 0.7rem !important;
+  text-transform: none !important;
   letter-spacing: 0 !important;
 }
 
-.fd-page-body table th code,
-article table th code {
-  font-weight: 600 !important;
+/* Code in body cells should look like inline code elsewhere. */
+.fd-page-body table td code,
+article table td code {
+  font-size: 0.8125rem !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
- * PREV / NEXT NAV CARDS — orange brand hover
+ * <Cards> / <Card> — refined Vercel-style.
+ *
+ * Each card is an <a data-card="true"> with an <h3> title and a
+ * description paragraph inside. Defaults are too compact (13px
+ * title) and the hover state is a flat background flip. New look:
+ * cleaner border + subtle elevation on hover, slightly larger
+ * title, animated arrow indicator, gentle background tint.
  * ═══════════════════════════════════════════════════════════════════ */
 
-article a[class*="rounded-lg border"],
-article a[class*="rounded-xl border"] {
-  background: var(--color-fd-card);
-  border-color: var(--color-fd-border) !important;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+article a[data-card="true"],
+.fd-page-body a[data-card="true"] {
+  position: relative !important;
+  padding: 1.05rem 1.15rem !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--color-fd-border) !important;
+  background: var(--color-fd-card) !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease !important;
 }
 
-article [data-card] h3 {
-  font-size: 0.8125rem !important;
-  line-height: 1.35 !important;
+article a[data-card="true"]:hover,
+.fd-page-body a[data-card="true"]:hover {
+  border-color: color-mix(in srgb, hsl(25 100% 50%) 38%, var(--color-fd-border)) !important;
+  background: color-mix(in srgb, hsl(25 100% 50%) 4%, var(--color-fd-card)) !important;
+  box-shadow: 0 1px 0 0 color-mix(in srgb, hsl(25 100% 50%) 12%, transparent),
+    0 8px 24px -16px color-mix(in srgb, hsl(25 100% 50%) 40%, transparent) !important;
+  transform: translateY(-1px) !important;
+}
+
+article a[data-card="true"] h3,
+.fd-page-body a[data-card="true"] h3 {
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
   font-weight: 500 !important;
+  letter-spacing: -0.005em !important;
+  margin: 0 0 0.35rem 0 !important;
+  color: var(--color-fd-foreground) !important;
+  transition: color 0.15s ease !important;
 }
 
-article a[class*="rounded-lg border"]:hover,
-article a[class*="rounded-xl border"]:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 6%, var(--color-fd-card)) !important;
-  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
-  color: var(--color-fd-card-foreground) !important;
-}
-
-article a[data-card]:hover h3 {
+article a[data-card="true"]:hover h3,
+.fd-page-body a[data-card="true"]:hover h3 {
   color: hsl(25 100% 62%) !important;
 }
 
+article a[data-card="true"] p,
+.fd-page-body a[data-card="true"] p {
+  font-size: 0.9375rem !important;
+  line-height: 1.55 !important;
+  color: var(--color-fd-muted-foreground) !important;
+  margin: 0 !important;
+}
+
+/* Heading anchor links use data-card="" (empty), so the
+ * data-card="true" selectors above don't touch them. No exception
+ * block needed. */
+
 /* ═══════════════════════════════════════════════════════════════════
- * CALLOUT
+ * CALLOUTS — Mintlify-style.
+ *
+ * fumadocs-ui's <Callout> renders as a flex row with an internal
+ * left-bar div and an icon, all on a solid card background. We
+ * target it via the inline `--callout-color` CSS variable (set
+ * per type: info / warn / error) and replace the look with a
+ * tinted background, a single accent border-left, and text that
+ * reads as foreground rather than muted.
  * ═══════════════════════════════════════════════════════════════════ */
 
-.fd-callout[data-type="info"],
-.fd-callout:not([data-type]) {
-  border-left: 2px solid var(--color-fd-border);
+div[style*="--callout-color"] {
+  background: color-mix(in srgb, var(--callout-color) 7%, var(--color-fd-card)) !important;
+  border: 1px solid color-mix(in srgb, var(--callout-color) 28%, var(--color-fd-border)) !important;
+  border-left-width: 3px !important;
+  border-left-color: var(--callout-color) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  padding: 0.875rem 1rem !important;
+  gap: 0.7rem !important;
+  align-items: flex-start !important;
+  margin: 1rem 0 !important;
+}
+
+/* The framework draws a duplicate inner left bar. Hide it; our
+ * border-left already provides the accent. */
+div[style*="--callout-color"] > div[role="none"] {
+  display: none !important;
+}
+
+div[style*="--callout-color"] > svg {
+  width: 1.05rem !important;
+  height: 1.05rem !important;
+  margin: 0.15rem 0 0 0 !important;
+  color: var(--callout-color) !important;
+  fill: transparent !important;
+  flex-shrink: 0 !important;
+  stroke-width: 2 !important;
+}
+
+/* Text content: foreground (not muted) so the callout actually
+ * reads as a highlighted note instead of fading away. */
+div[style*="--callout-color"] .prose-no-margin {
+  color: var(--color-fd-foreground) !important;
+}
+
+div[style*="--callout-color"] p,
+div[style*="--callout-color"] li {
+  color: var(--color-fd-foreground) !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+
+div[style*="--callout-color"] p + p {
+  margin-top: 0.5rem !important;
+}
+
+div[style*="--callout-color"] p a {
+  color: var(--callout-color) !important;
+  text-decoration: underline !important;
+  text-decoration-color: color-mix(in srgb, var(--callout-color) 55%, transparent) !important;
+  text-underline-offset: 0.2em !important;
+  font-weight: 500 !important;
+}
+
+div[style*="--callout-color"] p a:hover {
+  text-decoration-color: var(--callout-color) !important;
+}
+
+/* Inline code inside callouts — match the tint of the callout. */
+div[style*="--callout-color"] code:not(pre code) {
+  background: color-mix(in srgb, var(--callout-color) 15%, var(--color-fd-card)) !important;
+  border-color: color-mix(in srgb, var(--callout-color) 30%, transparent) !important;
+  color: color-mix(in srgb, var(--callout-color) 75%, var(--color-fd-foreground)) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════

@@ -29,6 +29,7 @@ export default defineDocs({
       layout: {
         contentWidth: 768,
         sidebarWidth: 280,
+        tocWidth: 300,
         toc: { enabled: true, depth: 3, style: "directional" },
         header: { height: 56, sticky: true },
       },
@@ -88,8 +89,7 @@ export default defineDocs({
   lastUpdated: { enabled: true, position: "footer" },
 
   readingTime: {
-    enabled: true,
-    wordsPerMinute: 220,
+    enabled: false,
   },
 
   pageActions: {
