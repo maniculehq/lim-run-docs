@@ -13,14 +13,7 @@ export function useMDXComponents(components?: MDXComponents): MDXComponents {
   return getMDXComponents(
     {
       // Mintlify → fumadocs-ui equivalents
-      Accordion: ({
-        children,
-        ...props
-      }: React.ComponentProps<typeof FumadocsAccordion>) => (
-        <Accordions type="single" collapsible>
-          <FumadocsAccordion {...props}>{children}</FumadocsAccordion>
-        </Accordions>
-      ),
+      Accordion: FumadocsAccordion,
       Accordions,
       Step,
       Steps,

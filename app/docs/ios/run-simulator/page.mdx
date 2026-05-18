@@ -613,6 +613,7 @@ lim ios create --reuse-if-exists \
   <img src="/images/console/03-ios-models.png" alt="Console Playground iOS model picker showing iPhone, iPad, and Apple Watch options" />
 </Frame>
 
+<Accordions>
 <Accordion title="Manage the WebSocket connection">
 
 The TypeScript client exposes lifecycle hooks for long-running drivers and connection debugging:
@@ -632,6 +633,7 @@ client.disconnect();  // close cleanly, do not auto-reconnect
 The SDK auto-reconnects on transient failures with exponential backoff (defaults: 6 attempts, 1 s base, 30 s cap). `disconnect()` is final; no further auto-reconnects after it.
 
 </Accordion>
+</Accordions>
 
 ## Next steps
 
