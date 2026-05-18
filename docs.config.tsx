@@ -29,6 +29,7 @@ export default defineDocs({
       layout: {
         contentWidth: 768,
         sidebarWidth: 280,
+        tocWidth: 300,
         toc: { enabled: true, depth: 3, style: "directional" },
         header: { height: 56, sticky: true },
       },

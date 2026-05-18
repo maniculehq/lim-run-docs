@@ -305,19 +305,87 @@ article h3 {
 }
 
 .prose p, .prose li, .prose td, article p {
-  font-size: 0.9375rem !important;
-  line-height: 1.65 !important;
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
   font-weight: 400 !important;
   color: var(--color-fd-muted-foreground) !important;
 }
 
-/* H1 has no underline rule; the framework injects TitleDecorations
- * (description + read-time) directly after it with its own divider, so
- * a second border here was creating duplicate horizontal rules. */
-.fd-page-body h1 {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0.5rem;
+/* ═══════════════════════════════════════════════════════════════════
+ * RIGHT-HAND TOC — bumped width.
+ *
+ * The framework's TOC container ships with a tailwind class that
+ * pins --fd-toc-width to 268px at the xl breakpoint, which clobbers
+ * the value we set in docs.config (300). Force the larger value at
+ * every breakpoint that shows the TOC.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+#nd-toc,
+[style*="--fd-toc-width"] {
+  --fd-toc-width: 300px !important;
+}
+
+@media (min-width: 1024px) {
+  #nd-toc {
+    width: 300px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * PAGE TITLE BLOCK — Vercel-style compact
+ *
+ * The framework renders:
+ *   <h1>Title</h1>
+ *   <p class="fd-page-description">…</p>
+ *   <div class="fd-below-title-block">
+ *     <hr class="fd-title-separator" />
+ *     [reading time]
+ *   </div>
+ *
+ * The defaults leave too much vertical space between elements and add
+ * a horizontal rule between the description and the reading time.
+ * Vercel docs run them tighter and skip the rule.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.fd-page-body h1,
+article h1 {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.fd-page-description {
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  color: color-mix(in srgb, var(--color-fd-muted-foreground) 88%, var(--color-fd-foreground)) !important;
+}
+
+.fd-below-title-block {
+  margin-top: 0.25rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+/* The horizontal rule between description and reading-time was
+ * creating visual noise in the title block. Hide it. */
+.fd-title-separator {
+  display: none !important;
+}
+
+/* Slim down the reading-time row so it sits compactly under the
+ * description rather than floating in dead space. */
+.fd-page-meta,
+.fd-reading-time {
+  font-family: var(--fd-font-mono) !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--color-fd-muted-foreground) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -454,36 +522,72 @@ figure.shiki,
 }
 
 /* ═══════════════════════════════════════════════════════════════════
- * TABLES
+ * TABLES — Vercel-style: no outer border, just subtle row dividers,
+ * header in muted uppercase, compact rows.
  * ═══════════════════════════════════════════════════════════════════ */
 
 .fd-page-body table,
 article table {
-  overflow: hidden !important;
-  border: 1px solid var(--color-fd-border) !important;
-  border-radius: 8px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+  font-size: 0.9375rem !important;
 }
 
 .fd-page-body table thead,
 article table thead {
-  background: color-mix(in srgb, var(--color-fd-card) 82%, var(--color-fd-foreground) 4%) !important;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 85%, hsl(25 100% 50%) 15%) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--color-fd-border) !important;
 }
 
 .fd-page-body table th,
 article table th {
   background: transparent !important;
-  border-color: var(--color-fd-border) !important;
-  color: color-mix(in srgb, var(--color-fd-foreground) 82%, var(--color-fd-muted-foreground)) !important;
+  border: none !important;
+  color: var(--color-fd-muted-foreground) !important;
   font-family: var(--fd-font-sans) !important;
   font-size: 0.75rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  text-align: left !important;
+  padding: 0.625rem 0.875rem !important;
+}
+
+.fd-page-body table tbody tr,
+article table tbody tr {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 60%, transparent) !important;
+}
+
+.fd-page-body table tbody tr:last-child,
+article table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+.fd-page-body table td,
+article table td {
+  border: none !important;
+  padding: 0.7rem 0.875rem !important;
+  vertical-align: top !important;
+  color: var(--color-fd-foreground) !important;
+  line-height: 1.55 !important;
+}
+
+/* Code in header cells should match header weight, not bold. */
+.fd-page-body table th code,
+article table th code {
+  font-weight: 500 !important;
+  font-size: 0.7rem !important;
+  text-transform: none !important;
   letter-spacing: 0 !important;
 }
 
-.fd-page-body table th code,
-article table th code {
-  font-weight: 600 !important;
+/* Code in body cells should look like inline code elsewhere. */
+.fd-page-body table td code,
+article table td code {
+  font-size: 0.8125rem !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
