@@ -630,11 +630,11 @@ article a[data-card="true"]:hover,
 
 article a[data-card="true"] h3,
 .fd-page-body a[data-card="true"] h3 {
-  font-size: 0.9375rem !important;
-  line-height: 1.35 !important;
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
   font-weight: 500 !important;
   letter-spacing: -0.005em !important;
-  margin: 0 0 0.3rem 0 !important;
+  margin: 0 0 0.35rem 0 !important;
   color: var(--color-fd-foreground) !important;
   transition: color 0.15s ease !important;
 }
@@ -646,7 +646,7 @@ article a[data-card="true"]:hover h3,
 
 article a[data-card="true"] p,
 .fd-page-body a[data-card="true"] p {
-  font-size: 0.8125rem !important;
+  font-size: 0.9375rem !important;
   line-height: 1.55 !important;
   color: var(--color-fd-muted-foreground) !important;
   margin: 0 !important;
@@ -705,7 +705,7 @@ div[style*="--callout-color"] .prose-no-margin {
 div[style*="--callout-color"] p,
 div[style*="--callout-color"] li {
   color: var(--color-fd-foreground) !important;
-  font-size: 0.875rem !important;
+  font-size: 0.9375rem !important;
   line-height: 1.6 !important;
   margin: 0 !important;
 }
