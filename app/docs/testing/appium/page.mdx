@@ -59,7 +59,7 @@ The fork registers itself as `@limrun/xcuitest` (both `driverName` and `automati
 WebDriverAgent isn't on a fresh instance by default. Hand the platform a download URL for the WDA build when you create the instance, and the platform will install it and auto-launch it before `create` returns:
 
 <CodeGroup labels={["TypeScript", "Go", "Python"]}>
-```ts title="TypeScript"
+```ts 
 import { Limrun, Ios } from '@limrun/api';
 
 const limrun = new Limrun({ apiKey: process.env.LIM_API_KEY });
@@ -84,7 +84,7 @@ const instance = await limrun.iosInstances.create({
 });
 ```
 
-```go title="Go"
+```go
 import (
     "context"
     "os"
@@ -113,7 +113,7 @@ instance, err := lim.IosInstances.New(context.TODO(), limrun.IosInstanceNewParam
 })
 ```
 
-```python title="Python"
+```python 
 import os
 from limrun_api import Limrun
 
