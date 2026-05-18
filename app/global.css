@@ -204,6 +204,7 @@ button[aria-label="Expand Sidebar"] {
 
 /* Sidebar links — default */
 aside a[data-active] {
+  position: relative !important;
   font-size: 0.8125rem !important;
   line-height: 1.5 !important;
   border-radius: 4px !important;
@@ -228,8 +229,16 @@ aside a[data-active="true"] {
 }
 
 aside a[data-active="true"]::before {
-  background-color: transparent !important;
-  width: 0 !important;
+  content: "" !important;
+  position: absolute !important;
+  inset-inline-start: 0 !important;
+  top: 0.7rem !important;
+  bottom: 0.7rem !important;
+  width: 1px !important;
+  border-radius: 999px !important;
+  background: hsl(25 100% 55%) !important;
+  opacity: 0.95 !important;
+  pointer-events: none !important;
 }
 
 /* Nested sidebar items */
@@ -245,6 +254,12 @@ aside div.overflow-hidden[data-state] a[data-active="true"] {
   color: hsl(25 100% 62%) !important;
   font-weight: 500 !important;
   background: color-mix(in srgb, hsl(25 100% 50%) 8%, transparent) !important;
+}
+
+aside div.overflow-hidden[data-state] a[data-active="true"]::before {
+  inset-inline-start: 0.625rem !important;
+  top: 0.35rem !important;
+  bottom: 0.35rem !important;
 }
 
 aside div.overflow-hidden[data-state] a[data-active]:hover {
