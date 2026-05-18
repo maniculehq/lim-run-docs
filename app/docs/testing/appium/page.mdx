@@ -15,7 +15,7 @@ Point your existing Appium suite at a Limrun instance and run it from any host, 
 - Node 20 or newer to run the Appium server.
 - An Appium test you can already run locally. This page covers how to point it at Limrun, not how to author Appium tests.
 
-Code examples default to TypeScript with `webdriverio`. Instance-control snippets have Go and Python tabs where the SDK supports it (Python is control-plane only). The Appium capabilities themselves are wire-format and work with any Appium client (`appium-python-client`, Java `java-client`, Ruby, C#).
+Code examples have tabs for the SDKs and clients that apply: TypeScript, Go, and Python for instance-control snippets (Python is control-plane only); TypeScript, Python, and Java for the Appium capabilities.
 
 ## How the integration works
 
@@ -236,9 +236,10 @@ if !ok {
 
 ### iOS capabilities
 
-The snippet below is in `webdriverio`. If your test code is in Python (`appium-python-client`), Java (`java-client`), Ruby, or C#, set the same `appium:*` keys on your client's capabilities object the way you would any other Appium capability.
+Pick your Appium client below. The capability keys are the same across all three; only the surrounding code differs.
 
-```ts
+<CodeGroup>
+```ts title="TypeScript (webdriverio)"
 import { remote } from 'webdriverio';
 
 const driver = await remote({
@@ -264,6 +265,54 @@ const driver = await remote({
   },
 });
 ```
+
+```python title="Python (appium-python-client)"
+from appium import webdriver
+from appium.options.common import AppiumOptions
+
+opts = AppiumOptions()
+opts.set_capability('platformName', 'iOS')
+opts.set_capability('browserName', 'safari')            # omit for a native app session
+opts.set_capability('appium:automationName', '@limrun/xcuitest')
+opts.set_capability('appium:udid', udid)                # from your control-plane client
+opts.set_capability('appium:webDriverAgentUrl', wda_url)
+opts.set_capability('appium:wdaLocalPort', 443)
+opts.set_capability('appium:usePreinstalledWDA', True)
+opts.set_capability('appium:useNewWDA', False)
+opts.set_capability('appium:noReset', True)             # keep WDA installed across sessions
+opts.set_capability('appium:fullReset', False)
+opts.set_capability('appium:limInstanceApiUrl', api_url)
+opts.set_capability('appium:limInstanceToken', token)
+opts.set_capability('appium:wdaRequestHeaders', {'Authorization': f'Bearer {token}'})
+
+driver = webdriver.Remote('http://127.0.0.1:4723', options=opts)
+```
+
+```java title="Java (java-client v9+)"
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.options.XCUITestOptions;
+import java.net.URL;
+import java.util.Map;
+
+XCUITestOptions opts = new XCUITestOptions()
+    .setPlatformName("iOS")
+    .setBrowserName("safari")                                       // omit for a native app session
+    .setAutomationName("@limrun/xcuitest")
+    .setUdid(udid)
+    .setWdaLocalPort(443)
+    .setUsePreinstalledWDA(true)
+    .setUseNewWDA(false)
+    .setNoReset(true)                                               // keep WDA installed across sessions
+    .setFullReset(false)
+    .amend("appium:webDriverAgentUrl", wdaUrl)
+    .amend("appium:limInstanceApiUrl", apiUrl)
+    .amend("appium:limInstanceToken", token)
+    .amend("appium:wdaRequestHeaders", Map.of("Authorization", "Bearer " + token));
+
+IOSDriver driver = new IOSDriver(new URL("http://127.0.0.1:4723"), opts);
+```
+
+</CodeGroup>
 
 The Limrun-specific capabilities:
 
@@ -418,7 +467,8 @@ appium
 
 ### Android capabilities
 
-```ts
+<CodeGroup>
+```ts title="TypeScript (webdriverio)"
 import { remote } from 'webdriverio';
 
 const driver = await remote({
@@ -434,6 +484,35 @@ const driver = await remote({
   },
 });
 ```
+
+```python title="Python (appium-python-client)"
+from appium import webdriver
+from appium.options.common import AppiumOptions
+
+opts = AppiumOptions()
+opts.set_capability('platformName', 'Android')
+opts.set_capability('appium:automationName', 'UiAutomator2')
+opts.set_capability('appium:udid', '127.0.0.1:<port>')  # copy from `adb devices`
+opts.set_capability('appium:appPackage', 'com.example.app')
+opts.set_capability('appium:appActivity', '.MainActivity')
+
+driver = webdriver.Remote('http://127.0.0.1:4723', options=opts)
+```
+
+```java title="Java (java-client v9+)"
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.options.UiAutomator2Options;
+import java.net.URL;
+
+UiAutomator2Options opts = new UiAutomator2Options()
+    .setUdid("127.0.0.1:<port>")               // copy from `adb devices`
+    .setAppPackage("com.example.app")
+    .setAppActivity(".MainActivity");
+
+AndroidDriver driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), opts);
+```
+
+</CodeGroup>
 
 There are no Limrun-specific capabilities for Android. The tunnel makes the device local, so any capability documented for the upstream UiAutomator2 driver works as-is.
 
