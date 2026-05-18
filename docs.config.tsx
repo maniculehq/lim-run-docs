@@ -89,8 +89,7 @@ export default defineDocs({
   lastUpdated: { enabled: true, position: "footer" },
 
   readingTime: {
-    enabled: true,
-    wordsPerMinute: 220,
+    enabled: false,
   },
 
   pageActions: {
