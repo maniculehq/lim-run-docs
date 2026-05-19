@@ -29,14 +29,14 @@ const themeScript = `
 (function() {
   try {
     var t = localStorage.getItem('theme');
-    if (t === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-      document.documentElement.style.colorScheme = 'light';
-    } else {
+    if (t === 'dark') {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
       document.documentElement.style.colorScheme = 'dark';
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+      document.documentElement.style.colorScheme = 'light';
     }
   } catch (e) {}
 })();
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         {/* biome-ignore lint/security/noDangerouslySetInnerHtml: intentional theme init */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <RootProvider theme={{ defaultTheme: "dark", disableTransitionOnChange: false }}>
+        <RootProvider theme={{ defaultTheme: "light", disableTransitionOnChange: false }}>
           {children}
         </RootProvider>
       </body>
