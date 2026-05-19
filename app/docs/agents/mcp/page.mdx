@@ -21,7 +21,7 @@ This page covers when to reach for MCP vs the CLI, how to get the URL, and how t
 | **Where it runs** | The agent's shell | The agent's MCP client transport |
 | **Auth** | Org API key in env or config | Per-instance `status.token` as `Authorization: Bearer` |
 | **Connection** | Fresh WebSocket per command, or a persistent one via `lim session start` | Long-lived MCP session |
-| **What it can do** | Everything Limrun does. Full [CLI reference](/docs/reference). | Device control only. Five tools, listed below. No builds, no asset uploads. |
+| **What it can do** | Everything Limrun does. Full [CLI reference](/reference). | Device control only. Five tools, listed below. No builds, no asset uploads. |
 | **Best for** | Builds, instance lifecycle, asset management | Tight tap-screenshot-element-tree loops where round-trips matter |
 
 Most agents end up using both. Use the CLI for provisioning, builds, and assets. Use MCP when the agent needs native tool-use over the device-control surface without shelling out.
@@ -150,10 +150,10 @@ App installs, Xcode builds, and asset uploads aren't on the MCP server. The MCP 
 ## Next steps
 
 <Cards>
-  <Card title="Run an iOS Simulator" icon="smartphone" href="/docs/ios/run-simulator">
+  <Card title="Run an iOS Simulator" icon="smartphone" href="/ios/run-simulator">
     The full device-control surface MCP tools call into. Every method, every option.
   </Card>
-  <Card title="CLI for coding agents" icon="bot" href="/docs/agents/cli">
+  <Card title="CLI for coding agents" icon="bot" href="/agents/cli">
     Use the CLI for instance lifecycle, builds, and asset management. MCP doesn't cover those.
   </Card>
 </Cards>

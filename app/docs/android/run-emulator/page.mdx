@@ -204,7 +204,7 @@ Flags for `lim android create`:
 | `spec.clues[].clientIp` | string | Required when `kind: 'ClientIP'`. Set this to the IP of the end user whose browser will stream the emulator. The scheduler geolocates this IP and provisions in the nearest region for low-latency streaming. `spec.region` overrides this clue. |
 | `spec.clues[].osVersion` | string | Required when `kind: 'OSVersion'`. One of `'13'`, `'14'`, `'15'`. |
 | `spec.initialAssets[]` | array of `InitialAsset` | APKs to install while provisioning. See [Pre-install APKs](#pre-install-apks). |
-| `spec.sandbox.playwrightAndroid.enabled` | boolean | Provision a Playwright-Android sub-sandbox alongside the emulator and surface its CDP URL on `status.sandbox.playwrightAndroid.url`. Defaults to `false`. See [Automated testing > Playwright](/docs/testing/playwright). |
+| `spec.sandbox.playwrightAndroid.enabled` | boolean | Provision a Playwright-Android sub-sandbox alongside the emulator and surface its CDP URL on `status.sandbox.playwrightAndroid.url`. Defaults to `false`. See [Automated testing > Playwright](/testing/playwright). |
 
 </Tab>
 </Tabs>
@@ -421,7 +421,7 @@ limrun.AndroidInstanceNewParamsSpecInitialAsset{
 
 </CodeGroup>
 
-Anything you want to upload once and reuse goes through [Asset Storage](/docs/platform/asset-storage) first. For builds you want to push to an already-running pod, see [Install an APK](#install-an-apk).
+Anything you want to upload once and reuse goes through [Asset Storage](/platform/asset-storage) first. For builds you want to push to an already-running pod, see [Install an APK](#install-an-apk).
 
 ### Example response
 
@@ -455,7 +455,7 @@ A successful `create` returns the full instance resource.
 
 #### Watch the livestream
 - To watch the emulator stream, open `signedStreamUrl` in a browser. No need to login or get an API key.
-- For an embedded experience inside your own app, see [Embed the simulator](/docs/platform/embed-simulator).
+- For an embedded experience inside your own app, see [Embed the simulator](/platform/embed-simulator).
 
 #### Field reference
 
@@ -467,9 +467,9 @@ A successful `create` returns the full instance resource.
 | `status.state` | `unknown`, `creating`, `assigned`, `ready`, `terminated`. |
 | `status.apiUrl` | HTTP base for the Android control daemon. WebSocket control derives from it (`apiUrl + /ws`). Pass to `createInstanceClient`. |
 | `status.adbWebSocketUrl` | WebSocket endpoint for the ADB tunnel. Pass to `createInstanceClient` as `adbUrl`. |
-| `status.endpointWebSocketUrl` | WebSocket endpoint for the [`<RemoteControl />` web component](/docs/platform/embed-simulator) (append `?token=`). |
+| `status.endpointWebSocketUrl` | WebSocket endpoint for the [`<RemoteControl />` web component](/platform/embed-simulator) (append `?token=`). |
 | `status.signedStreamUrl` | Console-hosted watch URL with the token baked in. Open in a browser without your API key. |
-| `status.mcpUrl` | Per-instance MCP HTTP endpoint. Authenticate with your **org API key**, not `status.token`. See [MCP](/docs/agents/mcp). |
+| `status.mcpUrl` | Per-instance MCP HTTP endpoint. Authenticate with your **org API key**, not `status.token`. See [MCP](/agents/mcp). |
 | `status.targetHttpPortUrlPrefix` | WebSocket prefix (`wss://...`) for reaching HTTP services running on the device. Append your target port to forward traffic through. |
 | `status.sandbox.playwrightAndroid.url` | Chrome DevTools Protocol URL when the Playwright sub-sandbox is enabled. |
 | `status.token` | Per-instance bearer for `apiUrl`, `adbWebSocketUrl`, and `endpointWebSocketUrl`. Embedded in `signedStreamUrl`. |
@@ -566,7 +566,7 @@ Some tools that can work with `adb`:
 
 - **Android Studio.** Open `Device Manager → Pair Device Using Wi-Fi`, point it at `127.0.0.1:<port>`, and the emulator appears in the device picker. Run, debug, and Logcat flow through it.
 - **scrcpy.** Run `scrcpy -s 127.0.0.1:<port>` to mirror and remote-control the device.
-- **Appium.** Set `appium:udid` (or `appium:deviceName`) to `127.0.0.1:<port>` on any upstream Appium server. See [Automated testing > Appium](/docs/testing/appium).
+- **Appium.** Set `appium:udid` (or `appium:deviceName`) to `127.0.0.1:<port>` on any upstream Appium server. See [Automated testing > Appium](/testing/appium).
 
 ## Read the screen
 
@@ -956,16 +956,16 @@ The inactivity timeout fires if nobody talks to the daemon for that long. The ha
 ## See also
 
 <Cards>
-  <Card title="Automated testing with Appium" href="/docs/testing/appium">
+  <Card title="Automated testing with Appium" href="/testing/appium">
     Wire any upstream Appium server to the ADB tunnel for native or hybrid Android tests.
   </Card>
-  <Card title="Automated testing with Playwright" href="/docs/testing/playwright">
+  <Card title="Automated testing with Playwright" href="/testing/playwright">
     Drive Chrome on the emulator with Playwright via the `playwrightAndroid` sub-sandbox.
   </Card>
-  <Card title="Embed the simulator" href="/docs/platform/embed-simulator">
+  <Card title="Embed the simulator" href="/platform/embed-simulator">
     Stream the live emulator into your web app with `<RemoteControl />`.
   </Card>
-  <Card title="Asset Storage" href="/docs/platform/asset-storage">
+  <Card title="Asset Storage" href="/platform/asset-storage">
     Upload APKs once, reuse them across instances via `initialAssets`.
   </Card>
 </Cards>

@@ -22,7 +22,7 @@ The flow:
 | Provision an Xcode instance | ✓ | ✓ | via REST | ✓ |
 | Sync source and run `xcodebuild` | ✓ | not in SDK | not in SDK | ✓ |
 
-Python and Go users provision the instance with their SDK and drive the build with `lim xcode build`. See the [SDK capability matrix](/docs/reference#sdk-capability-matrix).
+Python and Go users provision the instance with their SDK and drive the build with `lim xcode build`. See the [SDK capability matrix](/reference#sdk-capability-matrix).
 
 ## Two ways to use the Xcode sandbox
 
@@ -198,7 +198,7 @@ await xcode.sync('./my-app', {
 });
 ```
 
-On the CLI, repeat `--additional-file local=remote` (see [agents/cli](/docs/agents/cli)). Paths on the remote side that start with `~/` expand to the sandbox's home directory.
+On the CLI, repeat `--additional-file local=remote` (see [agents/cli](/agents/cli)). Paths on the remote side that start with `~/` expand to the sandbox's home directory.
 
 ### Tune the delta sync
 
@@ -299,7 +299,7 @@ The build result includes a signed download URL when you've configured an upload
 
 Two options for distributing a build artifact.
 
-**Upload to Asset Storage.** The artifact lives in Limrun's managed storage and can be referenced by name in later `lim ios create --install-asset <name>` calls. Asset Storage also backs the [PR Previews](/docs/ios/pr-previews) flow.
+**Upload to Asset Storage.** The artifact lives in Limrun's managed storage and can be referenced by name in later `lim ios create --install-asset <name>` calls. Asset Storage also backs the [PR Previews](/ios/pr-previews) flow.
 
 ```bash
 lim xcode build . --scheme MyApp --upload my-build.ipa
@@ -388,16 +388,16 @@ No `runs-on: macos-latest`. No Apple-licensed CI runner. The build happens on Li
 ## Next steps
 
 <Cards>
-  <Card title="Run an iOS Simulator" icon="smartphone" href="/docs/ios/run-simulator">
+  <Card title="Run an iOS Simulator" icon="smartphone" href="/ios/run-simulator">
     Drive the simulator the build just installed onto: taps, screenshots, recordings, logs.
   </Card>
-  <Card title="Automatic PR Previews" icon="git-pull-request" href="/docs/ios/pr-previews">
+  <Card title="Automatic PR Previews" icon="git-pull-request" href="/ios/pr-previews">
     Wire `lim xcode build --upload` into a GitHub workflow that posts a preview link on every PR.
   </Card>
-  <Card title="Asset Storage" icon="package" href="/docs/platform/asset-storage">
+  <Card title="Asset Storage" icon="package" href="/platform/asset-storage">
     Manage uploaded build artifacts, pre-install apps at boot, and browse the Limrun App Store.
   </Card>
-  <Card title="SDK Reference" icon="book-open" href="/docs/reference">
+  <Card title="SDK Reference" icon="book-open" href="/reference">
     Auth, errors, the instance state machine, every resource × CRUD.
   </Card>
 </Cards>

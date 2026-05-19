@@ -11,7 +11,7 @@ Point your existing Appium suite at a Limrun instance and run it from any host, 
 
 ## Before you start
 
-- A Limrun API key in `LIM_API_KEY` (get one from [console.limrun.com](https://console.limrun.com)). If you've never used the CLI before, walk through the [Quickstart](/docs/quickstart) first.
+- A Limrun API key in `LIM_API_KEY` (get one from [console.limrun.com](https://console.limrun.com)). If you've never used the CLI before, walk through the [Quickstart](/quickstart) first.
 - Node 20 or newer to run the Appium server.
 - An Appium test you can already run locally. We won't cover authoring Appium tests, only pointing them at Limrun.
 
@@ -147,7 +147,7 @@ When the call resolves, three fields on the returned instance object feed into A
 - `instance.status.token`. The bearer token. Every URL on this instance authenticates with it, including WDA.
 - `instance.status.targetHttpPortUrlPrefix`. An HTTPS prefix that proxies to any port inside the simulator. The next section uses it to build the URL Appium hits on WDA's port 8100.
 
-For production, push the WDA `.zip` to [Asset Storage](/docs/platform/asset-storage) once and reference it by name, instead of pulling from GitHub on every run.
+For production, push the WDA `.zip` to [Asset Storage](/platform/asset-storage) once and reference it by name, instead of pulling from GitHub on every run.
 
 ### Point Appium at WDA on the instance
 
@@ -508,7 +508,7 @@ To install an APK before the session, push it through the tunnel like a normal l
 adb -s 127.0.0.1:<port> install ./app-debug.apk
 ```
 
-Or pre-install it at instance creation with `initialAssets`. See [Run an Android Emulator](/docs/android/run-emulator) for the create flow.
+Or pre-install it at instance creation with `initialAssets`. See [Run an Android Emulator](/android/run-emulator) for the create flow.
 
 ## Run from a Linux CI runner
 
@@ -556,7 +556,7 @@ For Android, replace the `Install Appium and driver` step above with the upstrea
 The CI runner doesn't need Xcode, the iOS SDK, or a local Android emulator. For iOS it needs Node, Appium, and `LIM_API_KEY`. For Android, add `adb` on the PATH (Appium's UiAutomator2 driver shells out to it, regardless of whether you open the tunnel through the CLI or `startAdbTunnel`).
 
 <Note>
-  Add `--label session=${{ github.run_id }}` when creating instances and tear them down at job end (or on failure). Inactivity timeouts handle the rest if a job crashes. See [Reuse and clean up instances](/docs/ios/run-simulator#reuse-and-clean-up-instances).
+  Add `--label session=${{ github.run_id }}` when creating instances and tear them down at job end (or on failure). Inactivity timeouts handle the rest if a job crashes. See [Reuse and clean up instances](/ios/run-simulator#reuse-and-clean-up-instances).
 </Note>
 
 ## Troubleshooting
@@ -579,16 +579,16 @@ The CI runner doesn't need Xcode, the iOS SDK, or a local Android emulator. For 
 ## Next steps
 
 <Cards>
-  <Card title="Run an iOS Simulator" href="/docs/ios/run-simulator">
+  <Card title="Run an iOS Simulator" href="/ios/run-simulator">
     Provision, configure, and drive iOS instances directly. The control surface Appium sits on top of.
   </Card>
-  <Card title="Run an Android Emulator" href="/docs/android/run-emulator">
+  <Card title="Run an Android Emulator" href="/android/run-emulator">
     ADB tunnel internals, instance configuration, and the Android control SDK.
   </Card>
-  <Card title="Playwright" href="/docs/testing/playwright">
+  <Card title="Playwright" href="/testing/playwright">
     The other testing route: Android Chrome over CDP.
   </Card>
-  <Card title="Asset Storage" href="/docs/platform/asset-storage">
+  <Card title="Asset Storage" href="/platform/asset-storage">
     Cache the WebDriverAgent bundle and your app builds so CI runs don't pull them from GitHub on every job.
   </Card>
 </Cards>

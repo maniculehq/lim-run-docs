@@ -6,14 +6,14 @@ icon: "smartphone"
 ---
 # Run an iOS Simulator
 
-Your iOS instance is `ready`. For provisioning, see the [Quickstart](/docs/quickstart); for builds, see [Build with remote Xcode](/docs/ios/build-with-xcode).
+Your iOS instance is `ready`. For provisioning, see the [Quickstart](/quickstart); for builds, see [Build with remote Xcode](/ios/build-with-xcode).
 
 ## Connect to your instance
 
 Open a WebSocket client to drive the instance.
 
 - **TypeScript** covers the full device-control surface (every method on this page).
-- **Go** covers most of the same methods. See the [SDK capability matrix](/docs/reference#sdk-capability-matrix) for the exact list.
+- **Go** covers most of the same methods. See the [SDK capability matrix](/reference#sdk-capability-matrix) for the exact list.
 - **Python** only ships the control plane (create, list, delete instances). For taps, screenshots, and other device actions from Python, drive the device through the CLI or raw REST.
 
 <CodeGroup labels={["TypeScript","Go"]}>
@@ -71,9 +71,9 @@ The instance status carries everything you need:
 |---|---|
 | `apiUrl` | HTTP base for the device daemon. Pass to the control client. |
 | `token` | Per-instance bearer for `apiUrl`, `endpointWebSocketUrl`, and `sandbox.xcode.url`. Embedded in `signedStreamUrl`. |
-| `endpointWebSocketUrl` | WebSocket endpoint for the [`<RemoteControl />` web component](/docs/platform/embed-simulator) (pass with `?token=`). |
+| `endpointWebSocketUrl` | WebSocket endpoint for the [`<RemoteControl />` web component](/platform/embed-simulator) (pass with `?token=`). |
 | `signedStreamUrl` | Console-hosted watch URL with the token embedded; open in a browser without your API key. |
-| `mcpUrl` | Per-instance MCP HTTP endpoint. Auth with the per-instance `status.token`, not your org API key. See [MCP](/docs/agents/mcp). |
+| `mcpUrl` | Per-instance MCP HTTP endpoint. Auth with the per-instance `status.token`, not your org API key. See [MCP](/agents/mcp). |
 | `sandbox.xcode.url` | Xcode sandbox API URL (only when `spec.sandbox.xcode.enabled: true`). |
 | `targetHttpPortUrlPrefix` | Reverse-proxy prefix for tunneled HTTP ports on the device. |
 | `state` | `unknown` → `creating` → `assigned` → `ready` → `terminated`. |
@@ -605,8 +605,8 @@ lim ios create --reuse-if-exists \
 | `inactivityTimeout` | duration string | `1m`, `10m`, `3h`. Default comes from your org settings. Passing `0` is equivalent to omitting it. |
 | `hardTimeout` | duration string | Forced termination. Default `0` = no hard cap. |
 | `clues` | array | Scheduling hints. `{ kind: 'ClientIP', clientIp }` picks a region close to the end user. |
-| `initialAssets` | array | Apps to install at boot. See [Asset Storage](/docs/platform/asset-storage). |
-| `sandbox.xcode.enabled` | boolean | Attach an Xcode build sandbox. See [Build with remote Xcode](/docs/ios/build-with-xcode). |
+| `initialAssets` | array | Apps to install at boot. See [Asset Storage](/platform/asset-storage). |
+| `sandbox.xcode.enabled` | boolean | Attach an Xcode build sandbox. See [Build with remote Xcode](/ios/build-with-xcode). |
 
 `metadata.labels` is free-form `key=value` and powers `reuseIfExists`, listing, and cleanup queries.
 
@@ -621,16 +621,16 @@ lim ios create --reuse-if-exists \
 ## Next steps
 
 <Cards>
-  <Card title="Build with remote Xcode" icon="hammer" href="/docs/ios/build-with-xcode">
+  <Card title="Build with remote Xcode" icon="hammer" href="/ios/build-with-xcode">
     Produce the build that gets installed onto the simulator.
   </Card>
-  <Card title="Automatic PR Previews" icon="git-pull-request" href="/docs/ios/pr-previews">
+  <Card title="Automatic PR Previews" icon="git-pull-request" href="/ios/pr-previews">
     Ship every PR with a built app and a live preview link, straight from a GitHub workflow.
   </Card>
-  <Card title="Embed the simulator" icon="monitor-play" href="/docs/platform/embed-simulator">
+  <Card title="Embed the simulator" icon="monitor-play" href="/platform/embed-simulator">
     Render the simulator in your web app with `<RemoteControl />`.
   </Card>
-  <Card title="Test in-app purchases" icon="credit-card" href="/docs/ios/in-app-purchases">
+  <Card title="Test in-app purchases" icon="credit-card" href="/ios/in-app-purchases">
     StoreKit local testing without an Apple Account or sandbox tester (advanced).
   </Card>
 </Cards>

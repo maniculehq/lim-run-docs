@@ -11,7 +11,7 @@ Playwright on Limrun automates **Chrome on Android emulator instances**. Your ex
 
 ## Before you start
 
-- A Limrun API key in `LIM_API_KEY` (get one from [console.limrun.com](https://console.limrun.com)). If you've never used the CLI before, walk through the [Quickstart](/docs/quickstart) first.
+- A Limrun API key in `LIM_API_KEY` (get one from [console.limrun.com](https://console.limrun.com)). If you've never used the CLI before, walk through the [Quickstart](/quickstart) first.
 - Node 20 or newer.
 - `playwright@1.56` in your project. The Android device API ships with the regular `playwright` package under an internal export (`_android`). The sub-sandbox server is pinned to `1.56`, so newer or older client versions reject the WebSocket handshake with a "Playwright version mismatch" error.
 
@@ -21,7 +21,7 @@ Playwright on Limrun automates **Chrome on Android emulator instances**. Your ex
 
 ## What's supported
 
-Playwright on Limrun is **Android Chrome only**. Each Android instance ships with Chrome, and Limrun exposes Chrome's DevTools Protocol (CDP) endpoint to your test as a single WebSocket URL. iOS Safari and desktop Chromium aren't routed through this integration; if you want Safari, look at [Appium](/docs/testing/appium).
+Playwright on Limrun is **Android Chrome only**. Each Android instance ships with Chrome, and Limrun exposes Chrome's DevTools Protocol (CDP) endpoint to your test as a single WebSocket URL. iOS Safari and desktop Chromium aren't routed through this integration; if you want Safari, look at [Appium](/testing/appium).
 
 There are two ways to reach that CDP endpoint, and the choice has real consequences for test speed.
 
@@ -143,7 +143,7 @@ When the call resolves, two things on the instance object matter for Playwright:
 
 ## Connect Playwright
 
-`playwright-python`, `playwright-java`, and `playwright-dotnet` don't expose the Android device API. If your stack can't run Node, use the [Appium](/docs/testing/appium) Android flow instead.
+`playwright-python`, `playwright-java`, and `playwright-dotnet` don't expose the Android device API. If your stack can't run Node, use the [Appium](/testing/appium) Android flow instead.
 
 The API lives behind Playwright's internal `_android` export. Pass the CDP URL with the bearer token as a query parameter, then go through Playwright's regular Android flow: warm up Chrome, launch the browser, open a page.
 
@@ -202,7 +202,7 @@ If you'd rather not enable the sub-sandbox, you can open an ADB tunnel and use P
 const [device] = await android.devices();
 ```
 
-This is the path the [Appium](/docs/testing/appium#run-an-android-test) page uses for UiAutomator2. It works for Playwright, but every CDP call traverses your laptop, so expect noticeably slower test runs.
+This is the path the [Appium](/testing/appium#run-an-android-test) page uses for UiAutomator2. It works for Playwright, but every CDP call traverses your laptop, so expect noticeably slower test runs.
 
 ## Troubleshooting
 
@@ -224,13 +224,13 @@ This is the path the [Appium](/docs/testing/appium#run-an-android-test) page use
 ## Next steps
 
 <Cards>
-  <Card title="Appium" href="/docs/testing/appium">
+  <Card title="Appium" href="/testing/appium">
     Cross-platform mobile automation: iOS Safari + native, Android native apps.
   </Card>
-  <Card title="Run an Android Emulator" href="/docs/android/run-emulator">
+  <Card title="Run an Android Emulator" href="/android/run-emulator">
     Instance lifecycle, ADB tunnel internals, and the Android control SDK.
   </Card>
-  <Card title="Asset Storage" href="/docs/platform/asset-storage">
+  <Card title="Asset Storage" href="/platform/asset-storage">
     Configuration assets like the Chrome flag used here, plus app assets for native testing.
   </Card>
 </Cards>
