@@ -56,7 +56,7 @@ body {
 
 /* ─── Selection ──────────────────────────────────────────────────── */
 ::selection {
-  background: hsl(25 100% 50%);
+  background: hsl(19 100% 50%);
   color: #000;
 }
 
@@ -157,7 +157,7 @@ aside button[aria-expanded].text-fd-muted-foreground {
 aside button[aria-controls].text-fd-muted-foreground:hover,
 aside button[aria-expanded].text-fd-muted-foreground:hover {
   color: var(--color-fd-foreground) !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 6%, transparent) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 6%, transparent) !important;
 }
 
 /* ── Sidebar collapse button — remove it ─────────────────────────── */
@@ -218,14 +218,14 @@ aside a[data-active] {
 /* Hover — very subtle orange tint */
 aside a[data-active]:hover {
   color: var(--color-fd-foreground) !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 6%, transparent) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 6%, transparent) !important;
 }
 
 /* Active — orange brand color */
 aside a[data-active="true"] {
-  color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 62%) !important;
   font-weight: 500 !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 8%, transparent) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 8%, transparent) !important;
 }
 
 aside a[data-active="true"]::before {
@@ -243,9 +243,9 @@ aside div.overflow-hidden[data-state] a[data-active] {
 }
 
 aside div.overflow-hidden[data-state] a[data-active="true"] {
-  color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 62%) !important;
   font-weight: 500 !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 8%, transparent) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 8%, transparent) !important;
 }
 
 aside div.overflow-hidden[data-state] a[data-active="true"]::before {
@@ -257,14 +257,14 @@ aside div.overflow-hidden[data-state] a[data-active="true"]::before {
   bottom: 0.35rem !important;
   width: 1px !important;
   border-radius: 999px !important;
-  background: hsl(25 100% 55%) !important;
+  background: hsl(19 100% 55%) !important;
   opacity: 0.95 !important;
   pointer-events: none !important;
   transition: opacity 0.18s ease, top 0.18s ease, bottom 0.18s ease, background-color 0.18s ease !important;
 }
 
 aside div.overflow-hidden[data-state] a[data-active]:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 6%, transparent) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 6%, transparent) !important;
   color: var(--color-fd-foreground) !important;
 }
 
@@ -329,18 +329,18 @@ article h3 {
 
 .fd-page-body a:not([data-card]):not([class*="rounded"]):not([href^="#"]),
 article a:not([data-card]):not([class*="rounded"]):not([href^="#"]) {
-  color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 62%) !important;
   font-weight: 500 !important;
   text-decoration-line: underline !important;
-  text-decoration-color: color-mix(in srgb, hsl(25 100% 50%) 45%, transparent) !important;
+  text-decoration-color: color-mix(in srgb, hsl(19 100% 50%) 45%, transparent) !important;
   text-underline-offset: 0.18em !important;
   transition: color 0.12s ease, text-decoration-color 0.12s ease !important;
 }
 
 .fd-page-body a:not([data-card]):not([class*="rounded"]):not([href^="#"]):hover,
 article a:not([data-card]):not([class*="rounded"]):not([href^="#"]):hover {
-  color: hsl(25 100% 68%) !important;
-  text-decoration-color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 68%) !important;
+  text-decoration-color: hsl(19 100% 62%) !important;
 }
 
 /* h1 underline */
@@ -358,9 +358,9 @@ code:not(pre code) {
   font-size: 0.78em !important;
   padding: 0.15em 0.4em !important;
   border-radius: 4px !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 10%, var(--color-fd-card)) !important;
-  border: 1px solid color-mix(in srgb, hsl(25 100% 50%) 22%, transparent) !important;
-  color: hsl(25 100% 65%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 10%, var(--color-fd-card)) !important;
+  border: 1px solid color-mix(in srgb, hsl(19 100% 50%) 22%, transparent) !important;
+  color: hsl(19 100% 65%) !important;
   font-weight: 400 !important;
 }
 
@@ -472,8 +472,8 @@ figure.shiki,
 }
 
 .docs-code-tabs [role="tab"][data-state="active"] {
-  color: hsl(25 100% 62%) !important;
-  border-bottom-color: hsl(25 100% 50%) !important;
+  color: hsl(19 100% 62%) !important;
+  border-bottom-color: hsl(19 100% 50%) !important;
   font-weight: 450 !important;
 }
 
@@ -522,7 +522,7 @@ article table {
 .fd-page-body table thead,
 article table thead {
   background: color-mix(in srgb, var(--color-fd-foreground) 4%, transparent) !important;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 85%, hsl(25 100% 50%) 15%) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-fd-border) 85%, hsl(19 100% 50%) 15%) !important;
 }
 
 .fd-page-body table tbody,
@@ -568,7 +568,7 @@ article a[data-card] > div.not-prose:first-child {
  * ═══════════════════════════════════════════════════════════════════ */
 
 div[style*="--callout-color"] {
-  --callout-color: hsl(25 100% 55%) !important;
+  --callout-color: hsl(19 100% 55%) !important;
   background: color-mix(in srgb, var(--callout-color) 7%, var(--color-fd-card)) !important;
   border: 1px solid color-mix(in srgb, var(--callout-color) 28%, var(--color-fd-border)) !important;
   border-left-width: 3px !important;
@@ -666,7 +666,7 @@ article [data-orientation="vertical"].rounded-lg.border button[data-orientation=
 
 .fd-page-body [data-orientation="vertical"].rounded-lg.border button[data-orientation="vertical"]:hover,
 article [data-orientation="vertical"].rounded-lg.border button[data-orientation="vertical"]:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 4%, transparent) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 4%, transparent) !important;
   color: var(--color-fd-foreground) !important;
 }
 
@@ -699,7 +699,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
  * ═══════════════════════════════════════════════════════════════════ */
 
 .fd-steps > li::before {
-  background: hsl(25 100% 50%) !important;
+  background: hsl(19 100% 50%) !important;
   color: #000 !important;
   border-radius: 4px !important;
   font-family: var(--fd-font-mono) !important;
@@ -753,7 +753,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 }
 
 .fd-breadcrumb-current {
-  color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 62%) !important;
   font-size: 0.6125rem !important;
   font-weight: 500 !important;
 }
@@ -822,9 +822,9 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 [data-page-actions] .fd-page-action-btn:hover,
 [data-page-actions] .fd-page-action-btn[aria-expanded="true"],
 [data-page-actions] .fd-page-action-btn[data-copied="true"] {
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
-  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
-  color: hsl(25 100% 62%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(19 100% 50%) 28%) !important;
+  color: hsl(19 100% 62%) !important;
 }
 
 .fd-page-actions .fd-page-action-btn svg,
@@ -872,8 +872,8 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 .fd-page-action-menu-item:hover,
 .fd-page-action-menu-item[data-highlighted],
 .fd-page-action-menu-item[data-selected="true"] {
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
-  color: hsl(25 100% 62%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  color: hsl(19 100% 62%) !important;
 }
 
 .fd-page-action-menu [role="menuitem"]:hover,
@@ -893,8 +893,8 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 [data-radix-popper-content-wrapper] [role="menuitem"]:hover,
 [data-radix-popper-content-wrapper] [role="menuitem"][data-highlighted],
 [data-radix-popper-content-wrapper] [role="menuitem"][data-selected="true"] {
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
-  color: hsl(25 100% 62%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  color: hsl(19 100% 62%) !important;
 }
 
 [data-radix-popper-content-wrapper] a[href*="github.com"]:hover,
@@ -902,8 +902,8 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 [data-radix-popper-content-wrapper] a[href*="claude.ai"]:hover,
 [data-radix-popper-content-wrapper] a[href*="cursor.com"]:hover,
 [data-radix-popper-content-wrapper] button:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
-  color: hsl(25 100% 62%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  color: hsl(19 100% 62%) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1015,9 +1015,9 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
   }
 
   #nd-subnav button[data-search]:hover {
-    background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
-    border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
-    color: hsl(25 100% 62%) !important;
+    background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
+    border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(19 100% 50%) 28%) !important;
+    color: hsl(19 100% 62%) !important;
   }
 
   #nd-subnav button[data-search]::after {
@@ -1050,9 +1050,9 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 
   :root:not(.dark) #nd-subnav button[data-search]:hover,
   .light #nd-subnav button[data-search]:hover {
-    background: color-mix(in srgb, hsl(25 100% 50%) 6%, #fff) !important;
-    border-color: color-mix(in srgb, #dedede 72%, hsl(25 100% 50%) 28%) !important;
-    color: hsl(25 100% 42%) !important;
+    background: color-mix(in srgb, hsl(19 100% 50%) 6%, #fff) !important;
+    border-color: color-mix(in srgb, #dedede 72%, hsl(19 100% 50%) 28%) !important;
+    color: hsl(19 100% 42%) !important;
   }
 }
 
@@ -1074,8 +1074,8 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 
 :root:not(.dark) .nav-link-item:hover,
 .light .nav-link-item:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 6%, #fff) !important;
-  color: hsl(25 100% 38%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 6%, #fff) !important;
+  color: hsl(19 100% 38%) !important;
 }
 
 .nav-link-dashboard {
@@ -1084,7 +1084,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
   font-size: 0.7125rem !important;
   font-weight: lighter !important;
   text-transform: uppercase !important;
-  background: hsl(25 100% 50%) !important;
+  background: hsl(19 100% 50%) !important;
   color: #000 !important;
   font-weight: 400 !important;
   padding: 0.4rem 0.75rem !important;
@@ -1092,21 +1092,21 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 
 :root:not(.dark) .nav-link-dashboard,
 .light .nav-link-dashboard {
-  background: hsl(25 100% 50%) !important;
-  border: 1px solid color-mix(in srgb, hsl(25 100% 50%) 84%, #fff 16%) !important;
+  background: hsl(19 100% 50%) !important;
+  border: 1px solid color-mix(in srgb, hsl(19 100% 50%) 84%, #fff 16%) !important;
   color: color-mix(in srgb, #000 74%, #fff 26%) !important;
   box-shadow: 0 1px 2px rgba(255, 107, 0, 0.16) !important;
 }
 
 .nav-link-dashboard:hover {
-  background: hsl(25 100% 45%) !important;
+  background: hsl(19 100% 45%) !important;
   color: #000 !important;
 }
 
 :root:not(.dark) .nav-link-dashboard:hover,
 .light .nav-link-dashboard:hover {
-  background: hsl(25 100% 50%) !important;
-  border-color: hsl(25 100% 50%) !important;
+  background: hsl(19 100% 50%) !important;
+  border-color: hsl(19 100% 50%) !important;
   color: #000 !important;
 }
 
@@ -1136,7 +1136,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 @media (max-width: 767px) {
   [data-toc-popover] {
     --fd-toc-popover-height: 40px !important;
-    --color-fd-primary: hsl(25 100% 50%) !important;
+    --color-fd-primary: hsl(19 100% 50%) !important;
     --color-fd-primary-foreground: #000 !important;
     --mobile-toc-surface: color-mix(
       in srgb,
@@ -1233,7 +1233,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
   }
 
   .dark [data-toc-popover-content] a[data-active="true"] {
-    color: hsl(25 100% 62%) !important;
+    color: hsl(19 100% 62%) !important;
   }
 
   [data-toc-popover-content] a span {
@@ -1268,7 +1268,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 
 /* Override fd-primary to orange inside TOC so the clerk SVG track is brand-colored */
 #nd-toc {
-  --color-fd-primary: hsl(25 100% 50%);
+  --color-fd-primary: hsl(19 100% 50%);
   --color-fd-primary-foreground: #000;
 }
 
@@ -1288,7 +1288,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 
 /* TOC links */
 #nd-toc a[data-active="true"] {
-  color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 62%) !important;
   font-weight: 500 !important;
 }
 
@@ -1307,7 +1307,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 
 .fd-nav-cta,
 [data-nav-cta] {
-  background: hsl(25 100% 50%) !important;
+  background: hsl(19 100% 50%) !important;
   color: #000 !important;
   border-radius: 6px !important;
   font-family: var(--fd-font-sans) !important;
@@ -1340,7 +1340,7 @@ article [data-orientation="vertical"].rounded-lg.border [data-state="open"] > di
 }
 
 .fd-page-footer a:hover {
-  color: hsl(25 100% 62%) !important;
+  color: hsl(19 100% 62%) !important;
 }
 
 .fd-page-footer .fd-llms-txt-links {
@@ -1363,9 +1363,9 @@ a[href*="llms"] {
 }
 
 a[href*="llms"]:hover {
-  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
-  color: hsl(25 100% 62%) !important;
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(19 100% 50%) 28%) !important;
+  color: hsl(19 100% 62%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
 }
 
 .fd-page-footer a[href*="/edit/"],
@@ -1400,9 +1400,9 @@ a[href*="llms"]:hover {
 [data-page-actions] a[href*="chatgpt.com"]:hover,
 [data-page-actions] a[href*="claude.ai"]:hover,
 [data-page-actions] a[href*="cursor.com"]:hover {
-  background: color-mix(in srgb, hsl(25 100% 50%) 7%, var(--color-fd-secondary)) !important;
-  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(25 100% 50%) 28%) !important;
-  color: hsl(25 100% 62%) !important;
+  background: color-mix(in srgb, hsl(19 100% 50%) 7%, var(--color-fd-secondary)) !important;
+  border-color: color-mix(in srgb, var(--color-fd-border) 72%, hsl(19 100% 50%) 28%) !important;
+  color: hsl(19 100% 62%) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════

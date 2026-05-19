@@ -54,7 +54,7 @@ export default defineDocs({
     title: (
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
-          <rect width="32" height="32" fill="hsl(25 100% 50%)" />
+          <rect width="32" height="32" fill="hsl(19 100% 50%)" />
           <text
             x="50%"
             y="55%"
@@ -166,7 +166,7 @@ export default defineDocs({
               letterSpacing: "0.04em",
               fontFamily: "var(--font-geist-mono), ui-monospace, monospace",
               textTransform: "uppercase",
-              color: "hsl(25 100% 60%)",
+              color: "hsl(19 100% 60%)",
             }}
           >
             Early Access
@@ -180,7 +180,7 @@ export default defineDocs({
           target="_blank"
           rel="noreferrer"
           className="flex items-center gap-1.5 mt-3 hover:underline underline-offset-2"
-          style={{ fontSize: "9.5px", fontFamily: "var(--font-geist-mono), ui-monospace, monospace", color: "hsl(25 100% 60%)", textDecorationColor: "hsl(25 100% 40%)", letterSpacing: "0.02em" , textTransform: "uppercase" }}
+          style={{ fontSize: "9.5px", fontFamily: "var(--font-geist-mono), ui-monospace, monospace", color: "hsl(19 100% 60%)", textDecorationColor: "hsl(19 100% 40%)", letterSpacing: "0.02em" , textTransform: "uppercase" }}
         >
           <Terminal size={11} className="shrink-0" />
           Get your free API key
