@@ -208,26 +208,8 @@ export default defineDocs({
           className="flex px-0 pl-3 py-2 items-center justify-between"
           style={{ color: "var(--color-fd-muted-foreground)" }}
         >
-          {/* <span style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), ui-monospace, monospace", letterSpacing: "0.02em", textTransform: "uppercase" }}>Theme</span> */}
           <SidebarThemeToggle variant="pill" />
         </div>
-        <a
-          href="https://manicule.dev"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-1 px-3 py-2 hover:opacity-100 opacity-70 transition-opacity"
-          style={{
-            fontSize: "10px",
-            fontFamily: "var(--font-geist-mono), ui-monospace, monospace",
-            color: "var(--color-fd-muted-foreground)",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-          }}
-        >
-          <span>[ Made with</span>
-          <span style={{ color: "#f9452d", fontWeight: 600 }}>Manicule</span>
-          <span>]</span>
-        </a>
       </div>
     ),
   },

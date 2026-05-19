@@ -1472,3 +1472,53 @@ a[href*="llms"]:hover {
     pointer-events: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+ * MADE WITH MANICULE — page-level footer badge
+ * Mimics Mintlify's "Powered by mintlify" placement: bottom of the
+ * content column, right-aligned, muted, monospace.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.made-with-manicule {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.25rem 0 0.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--color-fd-border);
+}
+
+.made-with-manicule a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--color-fd-muted-foreground);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.made-with-manicule a:hover {
+  opacity: 1;
+  color: var(--color-fd-foreground);
+}
+
+.made-with-manicule svg path {
+  fill: currentColor;
+}
+
+.made-with-manicule a:hover svg path {
+  fill: #f9452d;
+}
+
+.made-with-manicule__label {
+  color: var(--color-fd-muted-foreground);
+}
+
+.made-with-manicule__wordmark {
+  font-weight: 600;
+  color: var(--color-fd-foreground);
+  letter-spacing: 0.02em;
+}
