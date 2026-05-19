@@ -28,12 +28,12 @@ Two practical consequences:
 
 Same create call you'd use for any build-and-test flow, with `sandbox.xcode.enabled` switched on:
 
-<CodeGroup>
-```bash title="CLI"
+<CodeGroup labels={["CLI", "TypeScript", "Go", "Python"]}>
+```bash
 lim ios create --xcode --reuse-if-exists --region us-west --label name=iap-test
 ```
 
-```ts title="TypeScript"
+```ts
 import { Limrun, Ios } from '@limrun/api';
 
 const lim = new Limrun({ apiKey: process.env.LIM_API_KEY });
@@ -53,7 +53,7 @@ const instance = await lim.iosInstances.create({
 });
 ```
 
-```go title="Go"
+```go
 import (
     "context"
     "os"
@@ -81,7 +81,7 @@ instance, err := lim.IosInstances.New(context.TODO(), limrun.IosInstanceNewParam
 })
 ```
 
-```python title="Python"
+```python
 import os
 from limrun_api import Limrun
 
@@ -111,14 +111,14 @@ Both authenticate with the same `instance.status.token`.
 
 Sync your source to the Xcode sandbox and run `xcodebuild`. Critically, the build must be **ad-hoc-signed** so StoreKit's local test environment accepts the bundle. Simulator-target `xcodebuild` does ad-hoc signing by default when you don't pass certificate parameters, so you don't need to provision anything signing-related yourself. After a successful build, the app auto-installs on the attached simulator.
 
-<CodeGroup>
-```bash title="CLI"
+<CodeGroup labels={["CLI", "TypeScript"]}>
+```bash
 # Syncs the source folder and runs xcodebuild in one step. --id targets the
 # iOS instance with the Xcode sandbox attached (created above).
 lim xcode build ./MyApp --id <instance-id> --scheme MyApp --sdk iphonesimulator
 ```
 
-```ts title="TypeScript"
+```ts
 const xcode = await lim.xcodeInstances.createClient({
   apiUrl: instance.status.sandbox!.xcode!.url!,
   token: instance.status.token,
@@ -215,8 +215,8 @@ After discovery succeeds, the generated config is automatically registered for t
 
 Both flows leave the simulator in the same state: products and prices come from the local config. Drive your paywall and complete a purchase the same way you would for any other UI test:
 
-<CodeGroup>
-```bash title="CLI"
+<CodeGroup labels={["CLI", "TypeScript"]}>
+```bash
 lim ios launch-app --id <instance-id> com.example.MyApp
 lim ios open-url   --id <instance-id> "myapp://settings/upgrade"
 lim ios tap-element --id <instance-id> --ax-label "Subscribe Monthly"
@@ -224,7 +224,7 @@ lim ios tap-element --id <instance-id> --ax-label "Subscribe Monthly"
 lim ios tap-element --id <instance-id> --ax-label "Confirm"
 ```
 
-```ts title="TypeScript"
+```ts
 await ios.launchApp(bundleId);
 
 // However your app reaches the paywall: a deep link, a tab, a button tree.

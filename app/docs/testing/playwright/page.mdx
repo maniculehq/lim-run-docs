@@ -33,8 +33,8 @@ There are two ways to reach that CDP endpoint, and the choice has real consequen
 
 Two things change relative to a plain Android create call. First, turn on the Playwright sub-sandbox so the instance exposes a CDP WebSocket. Second, ship Chrome a flag that lets it accept command-line arguments from Playwright (Chrome on Android ignores them by default). Both go into a single `create` call:
 
-<CodeGroup>
-```ts title="TypeScript"
+<CodeGroup labels={["TypeScript", "Go", "Python"]}>
+```ts
 import { Limrun } from '@limrun/api';
 
 const limrun = new Limrun({ apiKey: process.env.LIM_API_KEY });
@@ -63,7 +63,7 @@ const instance = await limrun.androidInstances.create({
 });
 ```
 
-```go title="Go"
+```go
 import (
     "context"
     "os"
@@ -101,7 +101,7 @@ instance, err := lim.AndroidInstances.New(context.TODO(), limrun.AndroidInstance
 })
 ```
 
-```python title="Python"
+```python
 import os
 from limrun_api import Limrun
 
