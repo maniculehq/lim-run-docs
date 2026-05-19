@@ -6,7 +6,7 @@ icon: "introduction"
 ---
 # Introduction
 
-Mobile development is bound to platform-specific hardware: macOS for iOS, accelerated emulators for Android, physical devices for testing. Limrun runs that hardware as on-demand cloud services, so any process can build iOS apps without a Mac, test on simulators from a CI runner, embed a live simulator in a web app, or share a preview URL reviewers open in any browser.
+Limrun lets cloud coding agents do mobile development. macOS for iOS, accelerated emulators for Android, and physical-device hardware all run as on-demand cloud services, so an agent on a Linux VM can build iOS apps without a Mac, drive simulators from a CI runner, embed a live simulator in a web app, or share a preview URL reviewers open in any browser.
 
 ## Three products
 
@@ -21,16 +21,6 @@ Limrun is three composable cloud services:
 The iOS simulator and Xcode sandbox can be created as a paired instance in one call. A successful build auto-installs on the attached simulator, which is the most common shape.
 
 Limrun also offers **Asset Storage** for build artifacts: `.apk` for Android, and `.app` folders zipped or tarballed for iOS simulator installs. Upload once, then pre-install on new instances or share via preview URLs.
-
-## How it works
-
-Getting started is short:
-
-1. Install the CLI in your environment (or pull the SDK in your language).
-2. Authenticate by setting `LIM_API_KEY`.
-3. Create an instance: iOS, Android, or paired iOS + Xcode in one call.
-4. Use it. Build, drive the simulator, stream it, or attach to its ADB tunnel.
-5. Tear it down. Inactivity timeouts handle this for you if you forget.
 
 See the [Quickstart](/docs/quickstart) for a three-minute walkthrough.
 
@@ -52,11 +42,11 @@ The CLI wraps the SDK; both reach every operation.
 
 An *instance* is anything you create through Limrun: an iOS simulator, an Android emulator, or an Xcode build sandbox. Each one has an ID, exposes its own endpoints, and lives until you delete it or its inactivity timeout fires.
 
-Limrun is split into a control plane (where you create and manage instances) and per-instance data planes (where you actually interact with each instance). Your org API key authenticates the control plane and the per-instance MCP server; each instance returns its own per-instance token for everything else.
+Limrun is split into a control plane (where you create and manage instances) and per-instance data planes (where you actually interact with each instance). Your org API key authenticates the control plane; each instance returns its own per-instance token that authenticates everything tied to that instance, including its MCP server.
 
-Each instance also exposes a signed stream URL with a token baked into it. Anyone with the URL can open the running simulator in a browser without signing in.
+Each instance also exposes a signed stream URL with a token baked into it. Anyone with the URL can open the running simulator in a browser without signing in. This is what lets a cloud agent surface the live device to a human reviewer (a Slack link, a PR comment, a browser pane inside the agent's own UI) without putting them through an interactive auth flow.
 
-The CLI, SDKs, and `<RemoteControl />` all wrap the same REST surface. MCP-aware tools can call the per-instance MCP server directly.
+Drive Limrun from your environment with the `lim` CLI (for cloud agents and CI), the `@limrun/api` SDK in TypeScript / Python / Go (for backends that provision instances on behalf of users), or `<RemoteControl />` from `@limrun/ui` (to embed a live device in a web app). All three wrap the same REST API. MCP-aware tools can call the per-instance MCP server directly.
 
 ## How to get started
 
