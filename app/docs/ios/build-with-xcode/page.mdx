@@ -26,13 +26,19 @@ Python and Go users provision the instance with their SDK and drive the build wi
 
 ## Two ways to use the Xcode sandbox
 
-The right shape depends on whether you also need a simulator.
+The right shape depends on whether you also need a simulator right now.
+
+Limrun lets your agent compose its environment step-by-step: get an Xcode sandbox for the build, attach a simulator only when it's time to test, drop the simulator and go back to just Xcode (or swap to Android) when you're not. You only pay for what's currently running. Future services like Blender and Unity follow the same pattern.
 
 ### Paired with an iOS simulator (most common)
 
-When you want to build an app *and* run it on a simulator, create one iOS instance with the Xcode sandbox attached. Pass `--xcode` to the CLI, or set the sandbox config on the SDK call as shown below. After a successful build, the app auto-installs and auto-launches on the simulator.
+When the agent is going to test on a simulator right after the build, create one iOS instance with the Xcode sandbox attached. Pass `--xcode` to the CLI, or set the sandbox config on the SDK call as shown below. After a successful build, the app auto-installs and auto-launches on the simulator.
 
-<CodeGroup labels={["TypeScript","Python","Go"]}>
+<CodeGroup labels={["CLI","TypeScript","Python","Go"]}>
+```bash
+lim ios create --xcode --reuse-if-exists --label session=demo
+```
+
 ```ts
 import Limrun from '@limrun/api';
 
@@ -70,15 +76,15 @@ xcode_url = instance.status.sandbox.xcode.url
 // Go provisions the paired instance; the build step itself is not in the
 // Go SDK today. Drive the build with `lim xcode build` from your CI step.
 instance, err := lim.IosInstances.New(ctx, limrun.IosInstanceNewParams{
-    Wait:          limrun.Bool(true),
-    ReuseIfExists: limrun.Bool(true),
+    Wait:          param.NewOpt(true),
+    ReuseIfExists: param.NewOpt(true),
     Metadata: limrun.IosInstanceNewParamsMetadata{
         Labels: map[string]string{"session": "demo"},
     },
     Spec: limrun.IosInstanceNewParamsSpec{
         Sandbox: limrun.IosInstanceNewParamsSpecSandbox{
             Xcode: limrun.IosInstanceNewParamsSpecSandboxXcode{
-                Enabled: limrun.Bool(true),
+                Enabled: param.NewOpt(true),
             },
         },
     },
@@ -88,19 +94,17 @@ xcodeURL := instance.Status.Sandbox.Xcode.URL
 
 </CodeGroup>
 
-After this, `xcode` is the handle you use in the sync and build sections below.
-
-Or from the CLI:
-
-```bash
-lim ios create --xcode --reuse-if-exists --label session=demo
-```
+On the SDK side, `xcode` is the handle you use in the sync and build sections below. On the CLI, the `--xcode` flag is what carries the sandbox attachment through.
 
 ### Standalone, without a simulator
 
-For pure CI builds, real-device IPA distribution, or MCP-wrapped build tools, create a top-level Xcode instance. It has no simulator attached.
+For pure CI builds, real-device IPA distribution, or build steps where the agent doesn't need a simulator yet, create a top-level Xcode instance. Attach a simulator later only when it's time to run the app (see [Auto-install on the simulator](#auto-install-on-the-simulator)).
 
-<CodeGroup labels={["TypeScript","Python"]}>
+<CodeGroup labels={["CLI","TypeScript","Python"]}>
+```bash
+lim xcode create --reuse-if-exists --label session=ci-build
+```
+
 ```ts
 const xcodeInstance = await lim.xcodeInstances.create({
   wait: true,
@@ -128,37 +132,13 @@ If you only have the URL and token from a different process (not the full instan
 const xcode = await lim.xcodeInstances.createClient({ apiUrl, token });
 ```
 
-Or from the CLI:
-
-```bash
-lim xcode create --reuse-if-exists --label session=ci-build
-```
-
 The **Go SDK doesn't yet have a standalone Xcode resource.** From Go, either provision an iOS instance with the Xcode sandbox attached (the paired pattern above), POST to `/v1/xcode_instances` directly, or call `lim xcode create` from your process.
-
-You can also attach a simulator to a standalone Xcode sandbox later. See [Auto-install on the simulator](#auto-install-on-the-simulator).
 
 ## Sync your source
 
-Syncing pushes your source to the sandbox. The first sync uploads everything; later ones only send what changed. The example below uses every option; in practice you pass only what you need.
+Syncing pushes your source to the sandbox. The first sync uploads everything; later ones only send what changed.
 
-<CodeGroup labels={["TypeScript"]}>
-```ts
-await xcode.sync('./my-app', {
-  watch: true,             // re-sync on file changes
-  install: true,           // install after each sync (paired iOS only)
-  maxPatchBytes: 4 * 1024 * 1024,
-  basisCacheDir: '/tmp/lim-cache',
-  additionalFiles: [
-    { localPath: '/home/dev/.netrc', remotePath: '~/.netrc' },
-  ],
-});
-```
-
-</CodeGroup>
-
-Or from the CLI:
-
+<CodeGroup labels={["CLI","TypeScript"]}>
 ```bash
 # One-shot sync followed by build (the most common path)
 lim xcode build .
@@ -166,6 +146,18 @@ lim xcode build .
 # Continuous sync (watch mode) without building
 lim xcode sync . --watch
 ```
+
+```ts
+await xcode.sync('./my-app', {
+  watch: true,             // re-sync on file changes
+  install: true,           // install after each sync (paired iOS only)
+  additionalFiles: [
+    { localPath: '/home/dev/.netrc', remotePath: '~/.netrc' },
+  ],
+});
+```
+
+</CodeGroup>
 
 ### What gets synced
 
@@ -197,8 +189,6 @@ await xcode.sync('./my-app', {
 
 If your build needs files that aren't in your repo (a `.netrc` for private package access, a CI-only `Config.swift`, a secrets file), pass them in alongside the sync.
 
-On the SDK:
-
 ```ts
 await xcode.sync('./my-app', {
   additionalFiles: [
@@ -208,15 +198,7 @@ await xcode.sync('./my-app', {
 });
 ```
 
-On the CLI:
-
-```bash
-lim xcode build . \
-  --additional-file ~/.netrc=~/.netrc \
-  --additional-file ./ci/Config.swift=Config.swift
-```
-
-Paths on the remote side that start with `~/` expand to the sandbox's home directory.
+On the CLI, repeat `--additional-file local=remote` (see [agents/cli](/docs/agents/cli)). Paths on the remote side that start with `~/` expand to the sandbox's home directory.
 
 ### Tune the delta sync
 
@@ -229,9 +211,13 @@ Paths on the remote side that start with `~/` expand to the sandbox's home direc
 
 ## Run `xcodebuild`
 
-Trigger a build. Logs stream back as it runs, and `await` resolves to the final exit status.
+Trigger a build. Logs stream back as it runs.
 
-<CodeGroup labels={["TypeScript"]}>
+<CodeGroup labels={["CLI","TypeScript"]}>
+```bash
+lim xcode build . --scheme MyApp --workspace MyApp.xcworkspace
+```
+
 ```ts
 const build = xcode.xcodebuild({
   workspace: 'MyApp.xcworkspace',
@@ -248,12 +234,6 @@ const { exitCode, status } = await build;
 ```
 
 </CodeGroup>
-
-Or from the CLI:
-
-```bash
-lim xcode build . --scheme MyApp --workspace MyApp.xcworkspace
-```
 
 ### Build streams
 
@@ -282,7 +262,17 @@ Match what you'd pass to local `xcodebuild`:
 
 To produce a signed IPA for distribution, switch the target SDK to `iphoneos`, pass a P12 certificate, and pass a provisioning profile. Add an upload target so the IPA lands in Asset Storage with a downloadable URL.
 
-<CodeGroup labels={["TypeScript"]}>
+<CodeGroup labels={["CLI","TypeScript"]}>
+```bash
+lim xcode build . \
+  --sdk iphoneos \
+  --scheme MyApp \
+  --certificate-p12 ./signing/dist.p12 \
+  --certificate-password "$P12_PASSWORD" \
+  --provisioning-profile ./signing/MyApp.mobileprovision \
+  --upload my-app-pr-42.ipa
+```
+
 ```ts
 import fs from 'node:fs';
 
@@ -303,18 +293,6 @@ const { exitCode, signedDownloadUrl } = await build;
 
 </CodeGroup>
 
-Or from the CLI:
-
-```bash
-lim xcode build . \
-  --sdk iphoneos \
-  --scheme MyApp \
-  --certificate-p12 ./signing/dist.p12 \
-  --certificate-password "$P12_PASSWORD" \
-  --provisioning-profile ./signing/MyApp.mobileprovision \
-  --upload my-app-pr-42.ipa
-```
-
 The build result includes a signed download URL when you've configured an upload. Store it in your PR comment or pipeline output. Anyone with the URL can download the IPA without a Limrun API key. The signature expires after 15 minutes; if you need it later, re-fetch a fresh URL with `lim asset list --name <asset> --download-url`.
 
 ## Upload the build artifact
@@ -334,7 +312,7 @@ xcode.xcodebuild(
 );
 ```
 
-**Upload to your own bucket.** Pass a pre-signed S3, GCS, or R2 URL and the artifact PUTs directly to it from the sandbox. Use this when you want the artifact to land in storage you already manage.
+**Upload to your own bucket.** Pass a pre-signed S3, GCS, or R2 URL and the artifact PUTs directly to it from the sandbox. The build bytes never travel through your client; the sandbox handles the upload itself, which avoids a round-trip through whatever machine called `lim xcode build`. Use this when you want the artifact in storage you already manage, or when the build is large enough that pulling it back through your CI runner would be wasteful.
 
 ```bash
 lim xcode build . --scheme MyApp --signed-upload-url '<presigned-url>'
