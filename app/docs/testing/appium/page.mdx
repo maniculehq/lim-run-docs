@@ -62,9 +62,7 @@ import { Limrun, Ios } from '@limrun/api';
 
 const limrun = new Limrun({ apiKey: process.env.LIM_API_KEY });
 
-// Create the instance and block until it's `ready`. The initialAssets entry
-// downloads the WDA .zip, unpacks the .app inside it, installs it, and
-// auto-launches it, so by the time `create` returns, WDA is already running.
+// On success, WDA is installed and running on the simulator.
 const instance = await limrun.iosInstances.create({
   wait: true,
   reuseIfExists: true,
@@ -173,7 +171,7 @@ wdaURL := strings.Replace(instance.Status.TargetHTTPPortURLPrefix, "limrun.net",
 
 </CodeGroup>
 
-You'll pass `wdaUrl` to the driver as the `appium:webDriverAgentUrl` capability, and set `appium:wdaLocalPort: 443` so the two agree. That's all the Limrun-specific URL plumbing your test needs.
+You'll pass `wdaUrl` to the driver as the `appium:webDriverAgentUrl` capability, and set `appium:wdaLocalPort: 443` so the two agree.
 
 WDA can crash during long runs, and the auto-launch you set up at create time only fires on first install. Before each session, ping WDA's `/status` endpoint with the bearer token. If it doesn't answer cleanly, relaunch WDA from the platform side. The Limrun SDK gives you an instance client that can run `simctl` on the host Mac for exactly this:
 
@@ -193,9 +191,7 @@ const ok = await fetch(`${wdaUrl}/status`, {
   signal: AbortSignal.timeout(3000),
 }).then((r) => r.ok).catch(() => false);
 
-// If WDA is gone, relaunch it. com.facebook.WebDriverAgentRunner.xctrunner
-// is WDA's standard bundle id; `simctl launch booted <id>` starts it on
-// the currently booted simulator (there's only one per instance).
+// If WDA is gone, relaunch it.
 if (!ok) {
   await lim.simctl(['launch', 'booted', 'com.facebook.WebDriverAgentRunner.xctrunner']).wait();
 }
@@ -404,20 +400,14 @@ import { Limrun, createInstanceClient } from '@limrun/api';
 
 const limrun = new Limrun({ apiKey: process.env.LIM_API_KEY });
 
-// Provision an Android emulator and wait for it to be `ready`.
 const instance = await limrun.androidInstances.create({ wait: true });
 
-// Two URLs live on `status` for Android: `apiUrl` (control plane) and
-// `adbWebSocketUrl` (the WebSocket your local adb proxies through). Both
-// authenticate with the same per-instance bearer token.
 const client = await createInstanceClient({
   apiUrl: instance.status.apiUrl!,
   adbUrl: instance.status.adbWebSocketUrl!,
   token: instance.status.token,
 });
 
-// startAdbTunnel opens a local TCP listener (random port), proxies it to the
-// WebSocket, and shells out to `adb connect 127.0.0.1:<port>` for you.
 // After this, `adb devices` sees the emulator and Appium can attach.
 const { address, close } = await client.startAdbTunnel();
 console.log(`adb connected on ${address.address}:${address.port}`);
@@ -436,14 +426,12 @@ import (
 
 lim := limrun.NewClient(option.WithAPIKey(os.Getenv("LIM_API_KEY")))
 
-// Provision an Android emulator and wait for it to be ready.
 instance, err := lim.AndroidInstances.New(context.TODO(), limrun.AndroidInstanceNewParams{
     Wait: param.NewOpt(true),
 })
 if err != nil { panic(err) }
 
-// NewADB binds a free local TCP port; Start() proxies it to the per-instance
-// ADB WebSocket and runs `adb connect 127.0.0.1:<port>` for you.
+// After this, `adb devices` sees the emulator and Appium can attach.
 t, err := tunnel.NewADB(instance.Status.AdbWebSocketURL, instance.Status.Token)
 if err != nil { panic(err) }
 if err := t.Start(); err != nil { panic(err) }
@@ -453,7 +441,7 @@ log.Printf("adb connected on %s", t.Addr())
 
 </CodeGroup>
 
-The tunnel picks a free local port and runs `adb connect 127.0.0.1:<port>` for you. From Appium's side, the emulator is indistinguishable from a USB-attached device.
+From Appium's side, the emulator is indistinguishable from a USB-attached device.
 
 ### Install Appium
 

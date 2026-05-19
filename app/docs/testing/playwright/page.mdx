@@ -39,22 +39,17 @@ import { Limrun } from '@limrun/api';
 
 const limrun = new Limrun({ apiKey: process.env.LIM_API_KEY });
 
-// `wait: true` blocks until the instance is ready and the sandbox URL is
-// populated. `reuseIfExists` returns the same instance on a re-run with the
-// same labels, instead of spinning up a new one.
 const instance = await limrun.androidInstances.create({
   wait: true,
   reuseIfExists: true,
   metadata: { labels: { name: 'playwright' } },
   spec: {
-    // Turns on the per-instance Playwright service. Without this flag, no
-    // sandbox URL is returned and the rest of this page doesn't apply.
+    // Without this flag, no sandbox URL is returned.
     sandbox: {
       playwrightAndroid: { enabled: true },
     },
     // Flips Chrome's "accept command-line flags" switch at boot. Playwright
-    // needs it set to launch its remote browser; setting it after boot is
-    // too late.
+    // needs it to launch the remote browser.
     initialAssets: [
       {
         kind: 'Configuration',
@@ -160,21 +155,16 @@ const cdpUrl =
   instance.status.sandbox.playwrightAndroid!.url +
   `?token=${instance.status.token}`;
 
-// Connect to the remote device. This is the equivalent of `android.devices()`
-// when running against a real USB-attached phone, but it goes through Limrun
-// instead of adb.
+// Same shape as Playwright's local `android.devices()`, but routed through Limrun.
 const device = await android.connect(cdpUrl);
 
-// Chrome on a fresh Android profile won't accept CDP until it's run once and
-// processed first-run prompts. Start it, wait a second, force-stop it.
-// Skip this for warm instances you've already initialized.
+// Chrome on a fresh Android profile won't accept CDP until it's been launched
+// once and dismissed first-run prompts. Skip this on warm instances.
 await device.shell('am start com.android.chrome/com.google.android.apps.chrome.Main');
 await new Promise((r) => setTimeout(r, 1_000));
 await device.shell('am force-stop com.android.chrome');
 
-// launchBrowser opens Chrome under Playwright's control and returns a regular
-// BrowserContext. From here, your test code is identical to local Chrome:
-// `newPage`, `goto`, `locator`, `screenshot`, etc.
+// From here, test code is identical to local Chrome: newPage, goto, locator, screenshot.
 const browser = await device.launchBrowser();
 ```
 
