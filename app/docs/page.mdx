@@ -36,10 +36,6 @@ The CLI wraps the SDK; both reach every operation.
 
 ## Architecture
 
-<Frame>
-  <img src="/images/diagrams/architecture.png" alt="Two-stage architecture diagram. The control plane at api.limrun.com is authenticated with the org API key. Each instance returns a per-instance token plus URLs for HTTP control, WebSocket control, the browser stream, the MCP server, and on Android the ADB tunnel." />
-</Frame>
-
 An *instance* is anything you create through Limrun: an iOS simulator, an Android emulator, or an Xcode build sandbox. Each one has an ID, exposes its own endpoints, and lives until you delete it or its inactivity timeout fires.
 
 Limrun is split into a control plane (where you create and manage instances) and per-instance data planes (where you actually interact with each instance). Your org API key authenticates the control plane; each instance returns its own per-instance token that authenticates everything tied to that instance, including its MCP server.
