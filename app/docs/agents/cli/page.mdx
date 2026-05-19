@@ -8,41 +8,6 @@ icon: "terminal"
 
 Coding agents drive Limrun through the `lim` CLI. Once it's installed and authenticated, the agent can create a simulator, build your app, tap through it, record video, and share a preview link without leaving its shell.
 
-Setup is short: install the CLI, set your API key, and install the bundled skill. The rest of this page is the same guide the skill gives your agent, plus the command reference behind it.
-
-## One-time setup
-
-### 1. Install the CLI
-
-```bash
-# Pick your package manager
-npm  install --global @limrun/cli
-pnpm add     --global @limrun/cli
-bun  add     --global @limrun/cli
-```
-
-Needs Node.js 20 LTS or newer.
-
-### 2. Set your API key
-
-Set `LIM_API_KEY` in the environment your agent runs in. The CLI also picks up `.env` files in the working directory.
-
-```bash
-export LIM_API_KEY=lim_...
-```
-
-### 3. Give your agent the instructions
-
-The recommended way is to install the bundled skill:
-
-```bash
-lim skills install
-```
-
-The CLI detects which coding agents you have on the machine (Claude Code, Cursor, Codex), asks which ones to set up, then asks whether to install into the current project or globally. The default skill is `limrun-ios`, one short Markdown file you can read at [`typescript-sdk/packages/cli/skills/limrun-ios/SKILL.md`](https://github.com/limrun-inc/typescript-sdk/blob/main/packages/cli/skills/limrun-ios/SKILL.md).
-
-If you'd rather not install the skill, paste this prompt into your agent instead. It does the same thing:
-
 <Accordions>
 <Accordion icon="sparkles" title="Copy this prompt for your coding agent">
 ```text
@@ -72,6 +37,39 @@ For MCP-based device control instead of the CLI, see /agents/mcp.md.
 ```
 </Accordion>
 </Accordions>
+
+Setup is short: install the CLI, set your API key, hand the agent the prompt above (or install the bundled skill). The rest of this page is the same guide the skill gives your agent, plus the command reference behind it.
+
+## One-time setup
+
+### 1. Install the CLI
+
+```bash
+# Pick your package manager
+npm  install --global @limrun/cli
+pnpm add     --global @limrun/cli
+bun  add     --global @limrun/cli
+```
+
+Needs Node.js 20 LTS or newer.
+
+### 2. Set your API key
+
+Set `LIM_API_KEY` in the environment your agent runs in. The CLI also picks up `.env` files in the working directory.
+
+```bash
+export LIM_API_KEY=lim_...
+```
+
+### 3. Give your agent the instructions
+
+Either copy the prompt at the top of this page into your agent, or install the bundled skill so the agent picks it up automatically:
+
+```bash
+lim skills install
+```
+
+The CLI detects which coding agents you have on the machine (Claude Code, Cursor, Codex), asks which ones to set up, then asks whether to install into the current project or globally. The default skill is `limrun-ios`, one short Markdown file you can read at [`typescript-sdk/packages/cli/skills/limrun-ios/SKILL.md`](https://github.com/limrun-inc/typescript-sdk/blob/main/packages/cli/skills/limrun-ios/SKILL.md).
 
 ## What the agent does
 
