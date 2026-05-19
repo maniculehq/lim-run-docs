@@ -19,8 +19,6 @@ Playwright on Limrun automates **Chrome on Android emulator instances**. Your ex
   npm install playwright@1.56
   ```
 
-Code examples default to TypeScript. The instance-create call has Go and Python tabs alongside; from "Connect Playwright" onward the code is Node-only, because Playwright's Android device API only ships in the Node binding.
-
 ## What's supported
 
 Playwright on Limrun is **Android Chrome only**. Each Android instance ships with Chrome, and Limrun exposes Chrome's DevTools Protocol (CDP) endpoint to your test as a single WebSocket URL. iOS Safari and desktop Chromium aren't routed through this integration; if you want Safari, look at [Appium](/docs/testing/appium).
@@ -137,7 +135,7 @@ instance = limrun.android_instances.create(
 
 </CodeGroup>
 
-The Python SDK covers control-plane operations like the call above, but Playwright itself is the polyglot bottleneck here.
+The Python SDK covers control-plane calls like this one. Playwright's Android device API ships only in the Node binding, so the rest of the page stays in TypeScript.
 
 <Note>
   `reuseIfExists` matches existing instances by labels **and** region. If you don't pin `spec.region`, the platform may schedule your next create in a different region (closer to your current IP, for example), and the label match misses, so a fresh instance gets created instead. For repeatable reuse across CI runs or local dev sessions, pin `region: 'us-west'` (or whichever region you prefer) explicitly.
@@ -150,9 +148,9 @@ When the call resolves, two things on the instance object matter for Playwright:
 
 ## Connect Playwright
 
-From here on, the code is Node/TypeScript: Playwright's Android device API only ships in the Node binding. If you need Android browser automation from `playwright-python`, `playwright-java`, or `playwright-dotnet`, fall back to the ADB-tunnel flow with Selenium or another WebDriver client instead.
+`playwright-python`, `playwright-java`, and `playwright-dotnet` don't expose the Android device API. If your stack can't run Node, use the [Appium](/docs/testing/appium) Android flow instead.
 
-The Android API lives behind the internal `_android` export. Pass the CDP URL with the bearer token as a query parameter, then go through Playwright's regular Android flow: warm up Chrome, launch the browser, open a page:
+The API lives behind Playwright's internal `_android` export. Pass the CDP URL with the bearer token as a query parameter, then go through Playwright's regular Android flow: warm up Chrome, launch the browser, open a page.
 
 ```ts
 import { _android as android } from 'playwright';
