@@ -1,12 +1,25 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+
 /**
  * Page-level "Made with Manicule" badge.
  *
- * Renders at the bottom of every docs page, right-aligned within the content
- * column. The mark + wordmark match the manicule.dev brand (the two
- * parallelogram glyph + `#f9452d` signal red).
+ * Portals itself to the end of the docs `<article id="nd-page">` on mount,
+ * so it lands below the framework's feedback + Edit-on-GitHub + Last-updated
+ * footer chrome. Rendered as a plain centered link in the page's content
+ * column.
  */
 export function MadeWithManicule() {
-  return (
+  const [target, setTarget] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const article = document.getElementById("nd-page");
+    setTarget(article);
+  }, []);
+
+  const badge = (
     <div className="made-with-manicule">
       <a
         href="https://manicule.dev"
@@ -16,8 +29,8 @@ export function MadeWithManicule() {
       >
         <span className="made-with-manicule__label">Made with</span>
         <svg
-          width="14"
-          height="11.5"
+          width="16"
+          height="13"
           viewBox="0 0 599 492"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -30,4 +43,7 @@ export function MadeWithManicule() {
       </a>
     </div>
   );
+
+  if (!target) return null;
+  return createPortal(badge, target);
 }

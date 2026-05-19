@@ -11,10 +11,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavLinks />
-      <DocsLayout>
-        {children}
-        <MadeWithManicule />
-      </DocsLayout>
+      <DocsLayout>{children}</DocsLayout>
+      <MadeWithManicule />
     </>
   );
 }
