@@ -8,6 +8,36 @@ icon: "introduction"
 
 Limrun lets cloud coding agents do mobile development. macOS for iOS, accelerated emulators for Android, and physical-device hardware all run as on-demand cloud services, so an agent on a Linux VM can build iOS apps without a Mac, drive simulators from a CI runner, embed a live simulator in a web app, or share a preview URL reviewers open in any browser.
 
+<Accordions>
+<Accordion icon="sparkles" title="Copy this prompt for your coding agent">
+```text
+You're helping me build and test an iOS app on Limrun. For every task that runs the app:
+
+1. Check `lim --version`. If it's missing, ask me to install `@limrun/cli` first.
+2. Check that `LIM_API_KEY` is set. If not, ask me.
+3. Create or reuse an instance:
+   lim ios create --xcode --reuse-if-exists --label issue=<ID>
+   Share the Signed Stream URL from the output so I can watch.
+4. Build with `lim xcode build .`. Never use local `xcodebuild`. For multi-scheme projects, add `--scheme` and `--workspace`. If the build fails, read the errors and fix the code; don't bounce them back to me.
+5. Before each tap, read the screen with `lim ios element-tree`. Prefer accessibility selectors:
+   lim ios tap-element --ax-unique-id startButton
+   lim ios tap-element --ax-label "Save"
+6. For anything involving motion, record video:
+   lim ios record start
+   lim ios record stop -o /tmp/demo.mp4
+   Attach the video to the PR.
+7. When the work is ready, upload the build and share a preview link:
+   ASSET_NAME=<pr-or-task-id>.zip
+   lim xcode build . --upload "${ASSET_NAME}"
+   Post https://console.limrun.com/preview?asset=${ASSET_NAME}&platform=ios in your final message and the PR description.
+8. Clean up with `lim ios delete`. If you created more than one instance, list first:
+   lim ios list --label-selector "issue=<ID>"
+
+For MCP-based device control instead of the CLI, see /agents/mcp.md.
+```
+</Accordion>
+</Accordions>
+
 ## Three products
 
 Limrun is three composable cloud services:
