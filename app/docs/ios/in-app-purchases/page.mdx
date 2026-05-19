@@ -142,7 +142,7 @@ The Xcode sync + build pipeline isn't exposed in the Python or Go SDKs today. Fr
 
 ## Pick a flow
 
-The three StoreKit helpers below live on the iOS device-control client:
+The three StoreKit helpers live on the iOS device-control client:
 
 ```ts
 import { Ios } from '@limrun/api';
@@ -152,6 +152,10 @@ const ios = await Ios.createInstanceClient({
   token: instance.status.token,
 });
 ```
+
+<Note>
+  `setStoreKitConfig`, `clearStoreKitConfig`, `discoverStoreKitConfig`, and `softReset` are TypeScript-only today. The Go iOS WebSocket client at `github.com/limrun-inc/go-sdk/websocket/ios` ships the rest of device control (taps, element-tree, screenshots, `simctl`) but not these StoreKit helpers, and the Python SDK is control-plane only. From Go or Python, drive the StoreKit + soft-reset steps from a Node subprocess (or call the underlying HTTP endpoints directly); the surrounding provision, build, launch, and tap steps still work in your primary language.
+</Note>
 
 From here, you have two ways to populate the local config: register a file you already have, or auto-generate one from your existing App Store Connect setup.
 
