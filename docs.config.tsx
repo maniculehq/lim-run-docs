@@ -19,6 +19,7 @@ import { SidebarThemeToggle } from "@/components/sidebar-theme-toggle";
 
 export default defineDocs({
   entry: "docs",
+  docsPath: "",
 
   theme: darkbold({
     ui: {
