@@ -43,7 +43,7 @@ interface Asset {
 
 Stored assets are always binaries. That's the only thing the `Asset` record models, and there's no `kind` field on it. But `spec.initialAssets` accepts a second flavour of entry, `kind: 'Configuration'`, which carries an instance-level setting instead of pointing at Asset Storage. The `kind` field lives on the [`initialAsset` shape](#pre-install-on-boot), not on the `Asset` record.
 
-The only configuration today is `ChromeFlag`, used to enable Chrome's command-line on non-rooted Android emulators so [Playwright](/docs/testing/playwright) can attach. **SDK-only**: `@limrun/cli` doesn't expose a `--chrome-flag` flag, so this entry has to come from the SDK directly.
+The only configuration today is `ChromeFlag`, used to enable Chrome's command-line on non-rooted Android emulators so [Playwright](/docs/testing/playwright) can attach. **SDK-only**: the `lim` CLI doesn't expose a `--chrome-flag` flag, so this entry has to come from the SDK directly.
 
 <CodeGroup labels={["TypeScript","Go","Python"]}>
 ```ts

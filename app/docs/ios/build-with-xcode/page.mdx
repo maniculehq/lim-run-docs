@@ -357,7 +357,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install --global @limrun/cli
+      - run: npm install --global lim
       - name: Build
         env:
           LIM_API_KEY: ${{ secrets.LIM_API_KEY }}

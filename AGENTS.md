@@ -293,7 +293,7 @@ These are gaps the current docs don't address. They're real, agent-hitting failu
 - **CocoaPods/SPM** (covered above as open question #9).
 - **App crashed on launch.** Build succeeds, install succeeds, auto-launch happens, but app crashes in didFinishLaunchingWithOptions. Sim ends up on Springboard. Agent thinks all is well. The right pattern: after `lim xcode build`, always run `lim ios element-tree` to confirm the app UI is present, not Springboard.
 - **iOS system permission dialogs** (covered above as open question #10).
-- **`npx @limrun/cli` works without global install.** The CLI's own README documents this. Useful for agents without sudo. Worth adding to Install section.
+- **`npx lim` works without global install.** The CLI's own README documents this. Useful for agents without sudo. Worth adding to Install section.
 - **Stable labels for `--reuse-if-exists`.** If an agent uses ephemeral identifiers (timestamps, UUIDs) as labels, reuse silently fails and instances orphan every run. Worth explicit warning.
 - **Scheme/workspace discovery.** When the agent first hits an iOS project it hasn't seen before, it doesn't know the scheme name. Discovery: `xcodebuild -list -workspace MyApp.xcworkspace` or grep the project for `.xcworkspace` / `.xcodeproj`.
 - **Stale `~/.lim/last-instances.json`.** If a previous CLI run crashed, the cached last-instance ID may point to a terminated instance. Cleaner pattern: `lim ios list` first.

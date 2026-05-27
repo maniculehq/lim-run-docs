@@ -13,7 +13,7 @@ Coding agents drive Limrun through the `lim` CLI. Once it's installed and authen
 ```text
 You're helping me build and test an iOS app on Limrun. For every task that runs the app:
 
-1. Check `lim --version`. If it's missing, ask me to install `@limrun/cli` first.
+1. Check `lim --version`. If it's missing, ask me to install `lim` first.
 2. Check that `LIM_API_KEY` is set. If not, ask me.
 3. Create or reuse an instance:
    lim ios create --xcode --reuse-if-exists --label issue=<ID>
@@ -46,9 +46,9 @@ Setup is short: install the CLI, set your API key, hand the agent the prompt abo
 
 ```bash
 # Pick your package manager
-npm  install --global @limrun/cli
-pnpm add     --global @limrun/cli
-bun  add     --global @limrun/cli
+npm  install --global lim
+pnpm add     --global lim
+bun  add     --global lim
 ```
 
 Needs Node.js 20 LTS or newer.
