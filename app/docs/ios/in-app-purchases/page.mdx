@@ -11,7 +11,7 @@ StoreKit can serve in-app purchase products from a local `.storekit` configurati
 
 ## Before you start
 
-- A Limrun API key in `LIM_API_KEY`. If you haven't used the CLI before, walk through the [Quickstart](/docs/quickstart) first.
+- A Limrun API key in `LIM_API_KEY`. If you haven't used the CLI before, walk through the [Quickstart](/quickstart) first.
 - An iOS app that uses StoreKit (or StoreKit 2) for in-app purchases.
 - Either a `.storekit` configuration file (the kind Xcode generates via *File → New → File → StoreKit Configuration File*), or a bundle ID that already has IAPs registered in App Store Connect sandbox. You pick which flow to use later on this page; both are supported.
 
@@ -21,7 +21,7 @@ StoreKit can serve in-app purchase products from a local `.storekit` configurati
 
 Two practical consequences:
 
-- The simulator needs to be set up so it accepts a local config. That means provisioning it with the **Xcode sandbox attached** (the same sandbox you use for [Build with remote Xcode](/docs/ios/build-with-xcode)), and ad-hoc-signing the build so the simulator runs it without an Apple Developer account.
+- The simulator needs to be set up so it accepts a local config. That means provisioning it with the **Xcode sandbox attached** (the same sandbox you use for [Build with remote Xcode](/ios/build-with-xcode)), and ad-hoc-signing the build so the simulator runs it without an Apple Developer account.
 - The config is keyed by bundle ID. Setting it for `com.example.MyApp` doesn't affect any other bundle on the same simulator, and clearing it sends StoreKit back to real-sandbox behavior for that bundle only.
 
 ## Provision an instance with the Xcode sandbox
@@ -138,7 +138,7 @@ if (exitCode !== 0) throw new Error(`xcodebuild failed (${exitCode})`);
 
 </CodeGroup>
 
-The Xcode sync + build pipeline isn't exposed in the Python or Go SDKs today. From those languages, drive the build through `lim xcode build` as a subprocess. See [Build with remote Xcode](/docs/ios/build-with-xcode) for the full surface (workspace, scheme, real-device signing, log streaming, artifact upload).
+The Xcode sync + build pipeline isn't exposed in the Python or Go SDKs today. From those languages, drive the build through `lim xcode build` as a subprocess. See [Build with remote Xcode](/ios/build-with-xcode) for the full surface (workspace, scheme, real-device signing, log streaming, artifact upload).
 
 ## Pick a flow
 
@@ -205,7 +205,7 @@ console.log(`Found ${result.itemsFound} items: ` +
   `${result.subscriptionGroupsCount} groups.`);
 ```
 
-The call **blocks server-side** until either a sandbox response gets cached or the timeout fires. While it's waiting, your app needs to trigger at least one StoreKit product fetch, which usually means opening the in-app paywall. Watch the simulator via `instance.status.signedStreamUrl` and drive the app there yourself, or automate it with the [device-control tap and element-tree APIs](/docs/ios/run-simulator#tap).
+The call **blocks server-side** until either a sandbox response gets cached or the timeout fires. While it's waiting, your app needs to trigger at least one StoreKit product fetch, which usually means opening the in-app paywall. Watch the simulator via `instance.status.signedStreamUrl` and drive the app there yourself, or automate it with the [device-control tap and element-tree APIs](/ios/run-simulator#tap).
 
 If discover times out, it's almost always because either the bundle has no IAPs registered in sandbox yet, or the app didn't actually fetch products during the window. Re-running with a longer `timeoutSeconds` won't help in either case.
 
@@ -292,13 +292,13 @@ await ios.setStoreKitConfig(bundleId, fs.readFileSync('./OtherProducts.storekit'
 ## Next steps
 
 <Cards>
-  <Card title="Run an iOS Simulator" href="/docs/ios/run-simulator">
+  <Card title="Run an iOS Simulator" href="/ios/run-simulator">
     The full device-control surface: taps, element queries, screenshots, app lifecycle.
   </Card>
-  <Card title="Build with remote Xcode" href="/docs/ios/build-with-xcode">
+  <Card title="Build with remote Xcode" href="/ios/build-with-xcode">
     The build options behind `xcodebuild()`: schemes, signing, log streaming, IPA output.
   </Card>
-  <Card title="Automatic PR Previews" href="/docs/ios/pr-previews">
+  <Card title="Automatic PR Previews" href="/ios/pr-previews">
     Ship every PR with a built app and a live preview link from GitHub Actions.
   </Card>
 </Cards>

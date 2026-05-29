@@ -48,13 +48,13 @@ The client browser never sees your API key, it uses a WebSocket URL and a token 
 
 Before you embed, you need:
 
-- **A Limrun API key, kept server-side.** Sign up at [console.limrun.com](https://console.limrun.com), open **Settings → API Keys**, and create a token. See [Authentication](/docs/reference#authentication) for the full flow.
-- **A way to create an instance from your backend.** Follow [Run an iOS simulator](/docs/ios/run-simulator) (covers iPhone, iPad, Apple Watch) or [Run an Android emulator](/docs/android/run-emulator).
+- **A Limrun API key, kept server-side.** Sign up at [console.limrun.com](https://console.limrun.com), open **Settings → API Keys**, and create a token. See [Authentication](/reference#authentication) for the full flow.
+- **A way to create an instance from your backend.** Follow [Run an iOS simulator](/ios/run-simulator) (covers iPhone, iPad, Apple Watch) or [Run an Android emulator](/android/run-emulator).
 - **A React 18+ frontend.** Vite, Next.js, Create React App, Remix, etc.
 
 The single contract between your backend and `<RemoteControl />` is the pair `endpointWebSocketUrl + token` from `instance.status`. Every spec field, region clue, label pattern, and lifecycle knob lives on the per-platform pages above.
 
-If your platform also builds your customers' apps in the cloud (not just runs them), [Build with remote Xcode](/docs/ios/build-with-xcode) is the companion page for compiling iOS apps on a remote Mac.
+If your platform also builds your customers' apps in the cloud (not just runs them), [Build with remote Xcode](/ios/build-with-xcode) is the companion page for compiling iOS apps on a remote Mac.
 
 ## Backend provisioning
 
@@ -222,11 +222,11 @@ async def stop(req: Request):
 ```
 </CodeGroup>
 
-A few details worth calling out. Full coverage of each lives on [Run an iOS simulator](/docs/ios/run-simulator#configure-the-instance) and [Run an Android emulator](/docs/android/run-emulator#configure-the-instance).
+A few details worth calling out. Full coverage of each lives on [Run an iOS simulator](/ios/run-simulator#configure-the-instance) and [Run an Android emulator](/android/run-emulator#configure-the-instance).
 
 - **Scheduling clues.** Network latency between client browser and Limrun's hosting region can be minised by hinting Limrun's scheduler to provision the instance closer to the end user's location. To do this, forward the end user's IP (`X-Forwarded-For` or `req.socket.remoteAddress`) as a `ClientIP` clue so the instance lands near them. 
 - **Labels for tenant scope and reuse.** Labels are free-form key-value pairs which can be used to organise multiple tenants or reuse hot instances. If `reuseIfExists` is set to `true`, scheduler returns existing hot instance whose `region` and `labels` match the current create call, so a user reopening their tab lands back on the same warm instance.
-- **Pre-install the customer's app.** Reference an uploaded build (or an [App Store catalog entry like Expo Go](/docs/platform/asset-storage#working-with-expo-go)) via `spec.initialAssets`, and the embedded simulator is launched with the app pre-installed during provisioning. See [Asset Storage](/docs/platform/asset-storage).
+- **Pre-install the customer's app.** Reference an uploaded build (or an [App Store catalog entry like Expo Go](/platform/asset-storage#working-with-expo-go)) via `spec.initialAssets`, and the embedded simulator is launched with the app pre-installed during provisioning. See [Asset Storage](/platform/asset-storage).
 - **Session lifecycle.** `inactivityTimeout` defaults to `3m`, almost always too short for an embedded UI; set 10 to 30 minutes. `hardTimeout` is a forced-termination safety cap, default `'0'` (no cap). Always wire up an explicit `delete` on tab close.
 
 ## Install `@limrun/ui`
@@ -372,7 +372,7 @@ ctrlRef.current?.sendKeyEvent({ type: 'keydown', code: 'Enter' });
 ctrlRef.current?.reconnect();
 ```
 
-These are browser-side imperatives. If you need richer **backend-side** control of the same device (taps by accessibility selector, element-tree inspection, video recording, reverse tunnels, soft-resets), drive the instance from your server with [`Ios.createInstanceClient`](/docs/ios/run-simulator#connect-to-your-instance) or the Android equivalent. The two paths are fully compatible; you can run both at once.
+These are browser-side imperatives. If you need richer **backend-side** control of the same device (taps by accessibility selector, element-tree inspection, video recording, reverse tunnels, soft-resets), drive the instance from your server with [`Ios.createInstanceClient`](/ios/run-simulator#connect-to-your-instance) or the Android equivalent. The two paths are fully compatible; you can run both at once.
 
 ## iPad and Apple Watch
 
@@ -544,16 +544,16 @@ A more elaborate version of the same pattern lives in [`typescript-sdk/examples/
 ## Next steps
 
 <Cards>
-  <Card title="Asset Storage" icon="database" href="/docs/platform/asset-storage">
+  <Card title="Asset Storage" icon="database" href="/platform/asset-storage">
     Upload customer builds and reference them in `spec.initialAssets` so the embedded simulator opens on their app.
   </Card>
-  <Card title="Run an iOS Simulator" icon="smartphone" href="/docs/ios/run-simulator">
+  <Card title="Run an iOS Simulator" icon="smartphone" href="/ios/run-simulator">
     Backend-side device control: tap by accessibility selector, element-tree, recording, reverse tunnels.
   </Card>
-  <Card title="Run an Android Emulator" icon="tablet-smartphone" href="/docs/android/run-emulator">
+  <Card title="Run an Android Emulator" icon="tablet-smartphone" href="/android/run-emulator">
     Same embed wiring, Android side. ADB tunnel, scrcpy, Appium, OS-version clues.
   </Card>
-  <Card title="Build with remote Xcode" icon="hammer" href="/docs/ios/build-with-xcode">
+  <Card title="Build with remote Xcode" icon="hammer" href="/ios/build-with-xcode">
     If your customers also compile iOS apps in your product, run `xcodebuild` on Limrun and pipe the result into the same simulator.
   </Card>
 </Cards>

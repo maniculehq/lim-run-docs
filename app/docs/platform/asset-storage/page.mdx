@@ -11,7 +11,7 @@ Asset Storage is the binary store that backs every Limrun instance. It lets you:
 1. **Pre-install an app build** (Android, iOS, iPadOS or watchOS) at boot so the embedded simulator starts with the app ready.
 2. **Hot-deploy a fresh build** into a *running* embedded session on rebuilds.
 
-For how to connect platform users to those instances, see [Embed the simulator](/docs/platform/embed-simulator).
+For how to connect platform users to those instances, see [Embed the simulator](/platform/embed-simulator).
 
 ## What are Assets?
 
@@ -133,7 +133,7 @@ lim asset push ./build/MyApp.app.tar.gz \
   -n "preview/${OWNER}/${REPO}/pr-${PR_NUMBER}-ios"
 ```
 
-(The action itself rolls the build and upload into a single `lim xcode build --upload "preview/…"` step (see [Build with remote Xcode](/docs/ios/build-with-xcode)), but the naming convention is the same.)
+(The action itself rolls the build and upload into a single `lim xcode build --upload "preview/…"` step (see [Build with remote Xcode](/ios/build-with-xcode)), but the naming convention is the same.)
 
 ### getOrCreate
 
@@ -401,7 +401,7 @@ instance = lim.android_instances.create(
 </CodeGroup>
 
 <Note>
-Android's `initialAsset` has no `launchMode` field. Boot installs only. To launch an APK after the instance is ready, drive a launch from your control code (e.g. via ADB through [`startAdbTunnel`](/docs/android/run-emulator#adb-tunnel-the-main-door-in)).
+Android's `initialAsset` has no `launchMode` field. Boot installs only. To launch an APK after the instance is ready, drive a launch from your control code (e.g. via ADB through [`startAdbTunnel`](/android/run-emulator#adb-tunnel-the-main-door-in)).
 </Note>
 
 If your app ships as a base APK plus density / locale / ABI splits (`base.apk` + `config.*.apk`), the whole set must install as one atomic group. See [Split APKs](#split-apks) for the grouped-install shape, which applies to both pre-install on boot and mid-session install.
@@ -419,7 +419,7 @@ If your app ships as a base APK plus density / locale / ABI splits (`base.apk` +
 </Tab>
 </Tabs>
 
-For the rest of the create-call spec (regions, clues, timeouts, sandboxes), see [Run an iOS simulator](/docs/ios/run-simulator#configure-the-instance) and [Run an Android emulator](/docs/android/run-emulator#configure-the-instance).
+For the rest of the create-call spec (regions, clues, timeouts, sandboxes), see [Run an iOS simulator](/ios/run-simulator#configure-the-instance) and [Run an Android emulator](/android/run-emulator#configure-the-instance).
 
 ### Install on a running instance
 
@@ -496,7 +496,7 @@ await android.sendAsset(asset.signedDownloadUrl, 180_000);
 </CodeGroup>
 
 <Note>
-`sendAsset` is TypeScript-only today. From Go or Python, drive the install via `lim android install-app` (or push the APK through the ADB tunnel; see [ADB tunnel](/docs/android/run-emulator#adb-tunnel-the-main-door-in)).
+`sendAsset` is TypeScript-only today. From Go or Python, drive the install via `lim android install-app` (or push the APK through the ADB tunnel; see [ADB tunnel](/android/run-emulator#adb-tunnel-the-main-door-in)).
 </Note>
 
 `sendAsset(url, timeoutMs?)` triggers a server-side download + `pm install`. The default client-side timeout is **120 s**; pass a higher value if your APK is large enough that the install can run past two minutes.
@@ -617,7 +617,7 @@ The iOS shape is identical with these differences:
 - **iOS-only:** `status.sandbox.xcode.url` when `spec.sandbox.xcode.enabled` is set.
 - **Android-only:** `status.adbWebSocketUrl` (WebSocket endpoint for ADB tunnel), `status.sandbox.playwrightAndroid.url` when the Playwright sub-sandbox is enabled.
 
-For the full field reference, see [Status URL surface](/docs/reference#status-url-surface).
+For the full field reference, see [Status URL surface](/reference#status-url-surface).
 
 ## Working with Expo Go
 
@@ -649,7 +649,7 @@ spec: {
 }
 ```
 
-Pair the boot install with the [`<RemoteControl openUrl="exp://…" />`](/docs/platform/embed-simulator#component-props) prop to land the device on the user's Expo project automatically on first paint:
+Pair the boot install with the [`<RemoteControl openUrl="exp://…" />`](/platform/embed-simulator#component-props) prop to land the device on the user's Expo project automatically on first paint:
 
 ```tsx
 <RemoteControl
@@ -795,16 +795,16 @@ The CLI maps these to `--name`, `--download-url`, `--upload-url`, and `--include
 ## Next steps
 
 <Cards>
-  <Card title="Embed the simulator" icon="monitor-play" href="/docs/platform/embed-simulator">
+  <Card title="Embed the simulator" icon="monitor-play" href="/platform/embed-simulator">
     Render `<RemoteControl />` with `initialAssets` so the embedded device opens straight into the customer's app.
   </Card>
-  <Card title="Build with remote Xcode" icon="hammer" href="/docs/ios/build-with-xcode">
+  <Card title="Build with remote Xcode" icon="hammer" href="/ios/build-with-xcode">
     `lim xcode build --upload` is the canonical way to land an iOS simulator build into Asset Storage.
   </Card>
-  <Card title="Automatic PR Previews" icon="git-pull-request" href="/docs/ios/pr-previews">
+  <Card title="Automatic PR Previews" icon="git-pull-request" href="/ios/pr-previews">
     Wire the upload step into a GitHub workflow that posts a preview link on every PR.
   </Card>
-  <Card title="SDK Reference" icon="book-open" href="/docs/reference">
+  <Card title="SDK Reference" icon="book-open" href="/reference">
     `assets.list` / `getOrCreate` / `getOrUpload` parameters across TypeScript, Python, and Go.
   </Card>
 </Cards>
