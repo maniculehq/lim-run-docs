@@ -30,20 +30,26 @@ The rest of this page covers the CLI flow.
 
     ```bash
     # Pick your package manager
-    npm  install --global @limrun/cli
-    pnpm add     --global @limrun/cli
-    bun  add     --global @limrun/cli
+    npm  install --global lim
+    pnpm add     --global lim
+    bun  add     --global lim
     ```
   </Step>
 
   <Step title="Authenticate">
-    Open the console in your browser, grab the API key from the page, and write it to `~/.lim/config.yaml`:
+    On a machine with a browser, run the login flow:
 
     ```bash
     lim login
     ```
 
-    On a headless host (CI, a devcontainer), set `LIM_API_KEY` in the environment instead.
+    The CLI opens the Limrun console, finishes authentication in your browser, and writes the API key to `~/.lim/config.yaml`.
+
+    On a headless host (CI, a devcontainer, or a cloud agent), create a token manually: open [console.limrun.com/settings](https://console.limrun.com/settings), go to **API Keys**, click **Create Token**, then export it in the environment:
+
+    ```bash
+    export LIM_API_KEY=lim_...
+    ```
   </Step>
 
   <Step title="Get an iOS project to build">

@@ -95,13 +95,13 @@ go get -u github.com/limrun-inc/go-sdk@latest
 
 ```bash
 # npm
-npm install --global @limrun/cli
+npm install --global lim
 
 # pnpm
-pnpm add --global @limrun/cli
+pnpm add --global lim
 
 # bun
-bun add --global @limrun/cli
+bun add --global lim
 ```
 </CodeGroup>
 
@@ -125,7 +125,7 @@ The three SDKs are not equivalent. Every one covers the control plane (create / 
 
 The **Go iOS WebSocket client** (`github.com/limrun-inc/go-sdk/websocket/ios`) covers screenshot, element-tree, tap, tap-element, type-text, press-key, launch-app, list-apps, open-url, install-app, lsof, set-orientation, increment/decrement/set element value, and `simctl` streaming. It does **not** include terminate-app, scroll, performActions, or video recording today.
 
-If you're on Python and need any of the device-control or build surfaces, the canonical option is the `lim` CLI from `@limrun/cli` (shell out from your code) or raw REST calls against the URLs returned in `instance.status`. The CLI is feature-complete; the SDKs catch up later.
+If you're on Python and need any of the device-control or build surfaces, the canonical option is the `lim` CLI (shell out from your code) or raw REST calls against the URLs returned in `instance.status`. The CLI is feature-complete; the SDKs catch up later.
 
 ## Errors
 
