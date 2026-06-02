@@ -1473,3 +1473,46 @@ a[href*="llms"]:hover {
     pointer-events: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+ * MADE WITH MANICULE — page-level footer badge
+ * Mimics Mintlify's "Powered by mintlify" placement: bottom of the
+ * content column, right-aligned, muted, monospace.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.made-with-manicule {
+  display: flex;
+  justify-content: center;
+  padding: 1.75rem 1rem 2.5rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+.made-with-manicule a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  color: var(--color-fd-muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.made-with-manicule a:hover {
+  color: var(--color-fd-foreground);
+}
+
+.made-with-manicule svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 13px;
+}
+
+.made-with-manicule svg path {
+  fill: #f9452d;
+}
+
+.made-with-manicule__wordmark {
+  font-weight: 600;
+  color: var(--color-fd-foreground);
+}
