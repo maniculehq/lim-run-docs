@@ -394,26 +394,69 @@ lim ios record stop --presigned-url "<url>"
 
 ## Reverse-tunnel a local service
 
-Expose a TCP service on your machine to the simulator. Use it for anything the app inside the simulator needs to call into: a mock backend, a debug proxy, a test runner, or a local Expo dev server so a React Native app on the remote simulator can hot-reload from your laptop without a public tunnel.
+The simulator runs remotely, but the app inside it sometimes needs to reach a service that runs on *your* side: a mock backend, a debug proxy, a test runner, or a local Expo dev server for hot-reload. A reverse tunnel solves this: the remote simulator opens an outbound connection that Limrun multiplexes back over a WebSocket to a TCP service on your machine, so a service on your laptop, CI runner, or private network appears local to the app, with no public tunnel and no inbound firewall holes.
+
+Note the direction: this tunnel is **simulator → your service** (outbound from the device).
+
+<Note>
+  Reaching a server running *inside* the simulator from the outside (WebDriverAgent, for example) is the opposite direction and a separate feature: the reverse proxy via `targetHttpPortUrlPrefix`. See [Appium](/docs/testing/appium) for how that's used and the [status URL surface](/docs/reference/sdk#status-url-surface) in the SDK reference.
+</Note>
 
 ```ts
 const tunnel = await client.startReverseTunnel({
   remotePort: 57090,           // must be in 57090..57099
-  localPort: 4000,             // defaults to remotePort
-  localHost: '127.0.0.1',
+  localPort: 57090,            // defaults to remotePort
+  localHost: '127.0.0.1',      // defaults to 127.0.0.1
 });
-// The simulator can now reach this service at 127.0.0.1:57090
-// tunnel.close() to tear it down
+// The app reaches your service at tunnel.remoteAddress, e.g.
+// `${tunnel.remoteAddress.address}:${tunnel.remoteAddress.port}`.
+// That address is an internal listener IP near the simulator, not 127.0.0.1.
+// tunnel.close() to tear it down.
 ```
 
-Or from the CLI:
+Or from the CLI, which prints that same address (the SDK's `tunnel.remoteAddress`) on start:
 
 ```bash
-lim ios reverse 57090:4000             # expose local :4000 as simulator :57090
+lim ios reverse 57090:57090            # expose local :57090 as simulator :57090
 lim ios reverse 57091 --local-host 0.0.0.0
 ```
 
-The remote port must be in **57090-57099**. That range is reserved for tunneled services. Tooling that picks its own port (the canonical `expo start` CLI defaults to `8081`, for example) needs the port made configurable before the tunnel works; the [Expo PR-preview Action](https://github.com/limrun-inc/ios-preview-action) wraps full app builds instead of dev-server hot-reload, so it doesn't go through this path.
+The remote port must be in **57090-57099**. That range is reserved for tunneled services. A few constraints apply:
+
+- **Client-first services only.** The app inside the simulator initiates the connection. Server-first protocols, where the server speaks first, aren't supported.
+- **No auto-reconnect.** The tunnel is fail-closed: if the underlying WebSocket drops, the listener and its active connections tear down. Restart the tunnel to recover.
+- **TypeScript SDK and CLI only.** Not available in the Go or Python SDKs. See the [SDK capability matrix](/docs/reference/sdk#sdk-capability-matrix).
+- **Android equivalent.** This primitive is iOS-only. On Android, use `adb reverse` over the [ADB tunnel](/docs/testing/appium#open-the-adb-tunnel).
+
+### Expo and Metro hot-reload
+
+A common use is hot-reloading a React Native app from a local Metro dev server. This assumes a development build (the app bundles `expo-dev-client`), which is what most apps with native modules run. You open the installed dev client through its custom scheme and point it at Metro over the tunnel.
+
+Two details are specific to Limrun, both stemming from the reserved port range. Metro defaults to port 8081, which is outside 57090-57099, so run it on a port within the range and map both sides of the tunnel to that same port. Matched ports matter: with a mismatched mapping such as `57090:8081`, Expo can advertise more than one packager URL, and the simulator ends up fetching from the local port it cannot reach, so bundles load only intermittently.
+
+Advertise the tunnel's simulator-facing host to Metro with `REACT_NATIVE_PACKAGER_HOSTNAME`, using the host only, with no port. The variable is hostname-only; appending a port yields a broken URL like `http://<host>:57090:8081`. The matched `--port` is what puts Metro on the tunnel port.
+
+`lim ios reverse` and `expo start` both run in the foreground until you stop them with Ctrl+C, so run each in its own terminal. On start, `lim ios reverse` prints the simulator-facing host:
+
+```bash
+lim ios reverse 57090:57090
+# Remote endpoint: 10.244.x.x:57090   # the host to use below
+```
+
+Set `HOST` to the address it printed, then reuse it below. Open the dev client through your app's scheme (the `scheme` in `app.json`, or `exp+<slug>` if it has none):
+
+```bash
+# Second terminal: set HOST to the address printed above, then start Metro
+# on the matched port, advertising that host.
+HOST=10.244.x.x
+REACT_NATIVE_PACKAGER_HOSTNAME=$HOST npx expo start --dev-client --host lan --port 57090
+
+# Third terminal (with HOST set): open the dev client pointed at the tunnel.
+# The url query is the URL-encoded form of http://$HOST:57090.
+lim ios open-url "<scheme>://expo-development-client/?url=http%3A%2F%2F$HOST%3A57090"
+```
+
+For CI, this is more reliable than `expo start --tunnel` (ngrok): no external service, and none of the `session closed` failures. Limrun's [automatic PR preview Action](/docs/ios/pr-previews) installs full app builds rather than running dev-server hot-reload, so it does not use this path.
 
 ## Drop into macOS dev tools
 
