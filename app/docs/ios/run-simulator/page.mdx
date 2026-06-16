@@ -443,15 +443,17 @@ lim ios reverse 57090:57090
 # Remote endpoint: 10.244.x.x:57090   # the host to use below
 ```
 
-Copy that host into the commands below in place of `<host>`. Open the dev client through your app's scheme (the `scheme` in `app.json`, or `exp+<slug>` if it has none):
+Set `HOST` to the address it printed, then reuse it below. Open the dev client through your app's scheme (the `scheme` in `app.json`, or `exp+<slug>` if it has none):
 
 ```bash
-# Second terminal: run Metro on the matched port, advertising the tunnel host.
-REACT_NATIVE_PACKAGER_HOSTNAME=<host> npx expo start --dev-client --host lan --port 57090
+# Second terminal: set HOST to the address printed above, then start Metro
+# on the matched port, advertising that host.
+HOST=10.244.x.x
+REACT_NATIVE_PACKAGER_HOSTNAME=$HOST npx expo start --dev-client --host lan --port 57090
 
-# Once both are running, open the dev client pointed at the tunnel.
-# The url query is the URL-encoded form of http://<host>:57090.
-lim ios open-url "<scheme>://expo-development-client/?url=http%3A%2F%2F<host>%3A57090"
+# Third terminal (with HOST set): open the dev client pointed at the tunnel.
+# The url query is the URL-encoded form of http://$HOST:57090.
+lim ios open-url "<scheme>://expo-development-client/?url=http%3A%2F%2F$HOST%3A57090"
 ```
 
 For CI, this is more reliable than `expo start --tunnel` (ngrok): no external service, and none of the `session closed` failures. Limrun's [automatic PR preview Action](/docs/ios/pr-previews) installs full app builds rather than running dev-server hot-reload, so it does not use this path.
