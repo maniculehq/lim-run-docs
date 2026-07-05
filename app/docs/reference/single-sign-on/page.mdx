@@ -1,0 +1,98 @@
+---
+title: "Single Sign-On"
+description: "Configure OIDC SSO for a Limrun organization."
+order: 3
+icon: "bookopen"
+---
+# Single Sign-On
+
+Limrun supports OpenID Connect (OIDC) SSO at the organization level. An organization has one OIDC connection, and users sign in through that connection when their email domain belongs to the organization.
+
+## Before you start
+
+You need admin access in Limrun and permission to create an OIDC application in your identity provider.
+
+In your identity provider, create a web OIDC application for Limrun. Use authorization code flow, and make sure the application can return the user's `email` claim in the ID token.
+
+## Add the redirect URI
+
+Add this sign-in redirect URI to the OIDC application in your identity provider:
+
+```text
+https://api.limrun.com/authn/oidc/callback
+```
+
+This is where the provider sends the authorization code after the user authenticates.
+
+If your provider asks for an initiate login URI, use:
+
+```text
+https://api.limrun.com/authn/oidc/login
+```
+
+For SP-initiated login, users normally start from the Limrun Console and enter their work email. Limrun uses the email domain to find the right SSO connection.
+
+## Configure Limrun
+
+Open [console.limrun.com](https://console.limrun.com), go to **Settings → Single Sign-On**, and configure the connection.
+
+Add the email domains that should use SSO first. Each domain must be verified before users with that domain can sign in through the OIDC connection.
+
+Then add the OIDC connection fields:
+
+| Field | Value |
+|---|---|
+| Issuer URL | The issuer from the provider's OpenID configuration. |
+| Client ID | The OIDC client ID from your identity provider. |
+| Client Secret | The OIDC client secret from your identity provider. |
+
+Limrun discovers the provider from the issuer URL and requests the `openid`, `email`, and `profile` scopes.
+
+## Find the issuer URL
+
+The issuer URL is the `issuer` value from your provider's OpenID configuration document. For example, if your provider is hosted at `https://idp.example.com`, open:
+
+```text
+https://idp.example.com/.well-known/openid-configuration
+```
+
+Use the `issuer` value from that JSON document.
+
+For Okta, this is usually the org issuer, such as:
+
+```text
+https://your-org.okta.com
+```
+
+If your Okta organization uses a custom domain, use that custom domain instead.
+
+## User provisioning
+
+Limrun uses just-in-time provisioning for OIDC SSO. If a user signs in through SSO and does not already have a Limrun account, Limrun creates the user and adds them to the organization for that OIDC connection.
+
+If a user already exists with the same verified email address, a successful OIDC sign-in moves that account to the OIDC identity. After that, the same user signs in through SSO for that organization.
+
+## Universal Logout
+
+If your identity provider supports Global Token Revocation (GTR), configure this endpoint:
+
+```text
+https://api.limrun.com/authn/oidc/global-token-revocation
+```
+
+The provider calls this endpoint with a signed bearer JWT and a `sub_id` identifying the user. Limrun verifies the JWT against the configured OIDC issuer, resolves the user, and revokes that user's active Limrun tokens.
+
+Limrun accepts these subject identifier formats:
+
+| Format | How Limrun resolves it |
+|---|---|
+| `iss_sub` | Matches the OIDC issuer and the user's OIDC `sub`. |
+| `email` | Matches the user's email after confirming the domain belongs to the OIDC connection's organization. |
+
+## Troubleshooting
+
+**Users do not see SSO for their email.** Confirm that their email domain is added to the Limrun organization and verified.
+
+**The provider rejects the redirect URI.** Confirm that the redirect URI is exactly `https://api.limrun.com/authn/oidc/callback`.
+
+**Okta says the client cannot use a custom authorization server.** Use the Okta org issuer, for example `https://your-org.okta.com`, instead of `https://your-org.okta.com/oauth2/default`.
