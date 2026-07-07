@@ -208,7 +208,6 @@ export default defineDocs({
           className="flex px-0 pl-3 py-2 items-center justify-between"
           style={{ color: "var(--color-fd-muted-foreground)" }}
         >
-          {/* <span style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), ui-monospace, monospace", letterSpacing: "0.02em", textTransform: "uppercase" }}>Theme</span> */}
           <SidebarThemeToggle variant="pill" />
         </div>
       </div>
